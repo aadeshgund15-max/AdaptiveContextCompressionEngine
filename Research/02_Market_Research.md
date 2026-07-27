@@ -214,3 +214,80 @@ Current observations suggest opportunities in:
 # References
 
 (To be added during research.)
+
+# Company 3 — Google (Gemini)
+
+## Company
+
+Google
+
+## Product
+
+Gemini
+
+## Primary Problem Solved
+
+Gemini is Google's family of multimodal Large Language Models designed for conversational AI, reasoning, coding assistance, document understanding, search augmentation, and enterprise AI applications.
+
+---
+
+## Context Management Approach
+
+Gemini supports long-context interactions through:
+
+- Large context windows (model dependent)
+- Conversation history
+- Retrieval integration through Google's ecosystem
+- Workspace integration
+- Internal context optimization (implementation details are not publicly disclosed)
+
+Google has publicly described long-context capabilities but has not published the detailed algorithms used for adaptive context compression.
+
+---
+
+## Strengths
+
+- Excellent multimodal capabilities
+- Strong integration with Google Workspace
+- Large context support
+- Strong reasoning performance
+- Enterprise ecosystem integration
+
+---
+
+## Observed Limitations
+
+- Internal context management algorithms are proprietary.
+- Users cannot define compression strategies.
+- No publicly documented semantic importance scoring.
+- No publicly documented future relevance prediction.
+- Limited transparency regarding reasoning preservation.
+
+---
+
+## Opportunity for ACCE
+
+Potential research opportunities include:
+
+- Adaptive semantic compression
+- Future utility estimation
+- Transparent memory management
+- Explainable context compression
+- Configurable memory policies
+
+---
+
+## Notes
+
+(To be updated during later research.)
+
+---
+
+## Gap Analysis
+
+Current observations indicate opportunities for:
+
+- Transparent compression
+- Predictive memory allocation
+- Explainable context decisions
+- Adaptive semantic preservation

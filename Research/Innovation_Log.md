@@ -92,3 +92,42 @@ Users cannot configure memory priorities.
 
 Possible Innovation:
 Priority-based adaptive memory management.
+
+---
+
+## Opportunity 8
+
+Company:
+Google (Gemini)
+
+Observation:
+Compression mechanisms are not publicly documented.
+
+Possible Innovation:
+Explainable adaptive compression framework.
+
+---
+
+## Opportunity 9
+
+Company:
+Google
+
+Observation:
+No public semantic importance model.
+
+Possible Innovation:
+Semantic Importance Scoring Engine.
+
+---
+
+## Opportunity 10
+
+Company:
+Google
+
+Observation:
+Future usefulness estimation is not publicly described.
+
+Possible Innovation:
+Future Utility Prediction Module.
