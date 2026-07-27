@@ -291,3 +291,96 @@ Current observations indicate opportunities for:
 - Predictive memory allocation
 - Explainable context decisions
 - Adaptive semantic preservation
+
+# Company 4 — LangChain
+
+## Company
+
+LangChain
+
+## Product
+
+LangChain Framework
+
+## Category
+
+Open-Source LLM Application Framework
+
+---
+
+## Primary Problem Solved
+
+LangChain helps developers build LLM-powered applications by providing abstractions for prompts, tools, agents, retrieval, memory, and context engineering.
+
+Unlike commercial AI assistants, LangChain is a framework rather than a model.
+
+---
+
+## Context Management Approach
+
+LangChain separates context into multiple concepts:
+
+- Short-term memory
+- Long-term memory
+- Runtime context
+- Cross-conversation context
+
+It encourages developers to explicitly engineer context instead of sending the complete conversation to the model.
+
+The framework also discusses several techniques for handling long conversations, including message filtering, summarization, and persistent memory.
+
+---
+
+## Memory Types
+
+LangChain documents three important memory categories:
+
+- Semantic Memory (facts)
+- Episodic Memory (past experiences)
+- Procedural Memory (instructions)
+
+This is inspired by cognitive memory systems.
+
+---
+
+## Strengths
+
+- Open-source
+- Excellent documentation
+- Flexible architecture
+- Supports persistent memory
+- Supports multiple LLM providers
+- Strong ecosystem
+
+---
+
+## Observed Limitations
+
+Although LangChain provides memory abstractions, it does not publicly describe a universal adaptive context compression algorithm.
+
+Developers are responsible for deciding:
+
+- what should become memory
+- what should be forgotten
+- how aggressively context should be compressed
+
+Different applications often require custom implementations.
+
+---
+
+## Opportunity for ACCE
+
+Possible research opportunities include:
+
+- Automatic context importance scoring
+- Adaptive compression policies
+- Future usefulness prediction
+- Compression confidence estimation
+- Token-budget-aware context optimization
+
+---
+
+## Notes
+
+LangChain focuses on context engineering rather than providing one universal context compression strategy.
+

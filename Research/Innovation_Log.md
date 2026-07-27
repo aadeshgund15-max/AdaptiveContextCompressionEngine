@@ -131,3 +131,55 @@ Future usefulness estimation is not publicly described.
 
 Possible Innovation:
 Future Utility Prediction Module.
+
+---
+
+## Opportunity 11
+
+Company:
+LangChain
+
+Observation:
+Developers must manually decide what information becomes memory.
+
+Possible Innovation:
+Automatic Context Importance Scoring.
+
+---
+
+## Opportunity 12
+
+Company:
+LangChain
+
+Observation:
+No universal adaptive compression algorithm.
+
+Possible Innovation:
+Adaptive Context Compression Engine.
+
+---
+
+## Opportunity 13
+
+Company:
+LangChain
+
+Observation:
+No prediction of future usefulness.
+
+Possible Innovation:
+Future Utility Prediction Model.
+
+---
+
+## Opportunity 14
+
+Company:
+LangChain
+
+Observation:
+No compression confidence metric.
+
+Possible Innovation:
+Context Compression Confidence Score.
