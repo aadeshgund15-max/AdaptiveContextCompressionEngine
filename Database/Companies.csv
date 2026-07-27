@@ -1,1 +1,3 @@
 Company,Product,Category,Website,Problem Solved,Memory Type,Compression,Long Context,Strengths,Weaknesses,Opportunity,Source,Status
+OpenAI,ChatGPT,LLM,https://chatgpt.com,Conversational AI,Conversation + Memory,Partial,Yes,Strong reasoning,Opaque compression,Adaptive semantic compression,Official Docs,Complete
+Anthropic,Claude,LLM,https://www.anthropic.com,Conversational AI and long-document reasoning,Conversation History,Unknown,Yes,Excellent long-context reasoning,Opaque compression methods,Transparent adaptive compression,Official Documentation,Complete

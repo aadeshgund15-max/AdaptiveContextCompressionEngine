@@ -53,3 +53,42 @@ Future importance prediction is not publicly exposed.
 
 Possible Innovation:
 Predictive memory scoring algorithm.
+
+---
+
+## Opportunity 5
+
+Company:
+Anthropic (Claude)
+
+Observation:
+Context compression strategy is not publicly documented.
+
+Possible Innovation:
+Transparent adaptive compression engine.
+
+---
+
+## Opportunity 6
+
+Company:
+Anthropic
+
+Observation:
+No future importance prediction is publicly described.
+
+Possible Innovation:
+Predictive semantic memory scoring.
+
+---
+
+## Opportunity 7
+
+Company:
+Anthropic
+
+Observation:
+Users cannot configure memory priorities.
+
+Possible Innovation:
+Priority-based adaptive memory management.

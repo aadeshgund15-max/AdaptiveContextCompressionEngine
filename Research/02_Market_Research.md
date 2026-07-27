@@ -122,6 +122,83 @@ These observations suggest that there is still room for innovation in adaptive c
 
 ---
 
+# Company 2 — Anthropic (Claude)
+
+## Company
+
+Anthropic
+
+## Product
+
+Claude
+
+## Primary Problem Solved
+
+Claude is a Large Language Model designed for conversational AI, document analysis, software development, enterprise workflows, and research assistance. It is optimized for handling long documents and complex reasoning tasks.
+
+---
+
+## Context Management Approach
+
+Claude manages long conversations using:
+
+- Large context windows
+- Conversation history
+- Retrieval mechanisms where applicable
+- Internal context optimization (implementation details are not publicly disclosed)
+
+Anthropic has publicly emphasized long-context capabilities but has not disclosed the exact algorithms used for context compression or memory management.
+
+---
+
+## Strengths
+
+- Excellent long-context handling
+- Strong document analysis
+- High-quality reasoning
+- Good performance on lengthy technical documents
+- Enterprise-focused capabilities
+
+---
+
+## Observed Limitations
+
+- Internal compression algorithms are not publicly documented.
+- Users cannot control compression strategies.
+- No publicly exposed importance scoring for memories.
+- No transparency regarding reasoning preservation.
+- No future-usefulness prediction mechanism is publicly described.
+
+---
+
+## Opportunity for ACCE
+
+Possible research directions include:
+
+- Adaptive semantic importance scoring
+- Predictive context importance estimation
+- Transparent context compression
+- Reasoning-aware context preservation
+- Configurable compression policies
+
+---
+
+## Notes
+
+(To be updated during later research.)
+
+---
+
+## Gap Analysis
+
+Current observations suggest opportunities in:
+
+- Transparent context management
+- User-configurable memory policies
+- Future relevance prediction
+- Compression confidence estimation
+- Adaptive reasoning preservation
+
 # Initial Observations
 
 (To be updated.)
