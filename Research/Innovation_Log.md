@@ -275,3 +275,54 @@ Compression confidence values are not exposed.
 Possible Innovation:
 Confidence-aware Memory Compression.
 
+---
+
+## Opportunity 22
+
+Company:
+Zep
+
+Observation:
+Memory is organized using temporal knowledge graphs.
+
+Possible Innovation:
+Adaptive decision layer that works independently of the underlying memory architecture.
+
+---
+
+## Opportunity 23
+
+Company:
+Zep
+
+Observation:
+No publicly documented future usefulness prediction before storing memories.
+
+Possible Innovation:
+Future Utility Prediction Engine.
+
+---
+
+## Opportunity 24
+
+Company:
+Zep
+
+Observation:
+No publicly documented confidence score for context selection.
+
+Possible Innovation:
+Confidence-Based Context Selection.
+
+---
+
+## Opportunity 25
+
+Company:
+Zep
+
+Observation:
+Provenance is preserved, but decision reasoning is not exposed as a general explainability feature.
+
+Possible Innovation:
+Explainable Context Decision Engine.

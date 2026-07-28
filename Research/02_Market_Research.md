@@ -555,3 +555,96 @@ Possible research opportunities include:
 
 Mem0 represents one of the most advanced public AI memory systems currently available and significantly narrows the available research gap.
 
+# Company 7 — Zep
+
+## Company
+
+Zep AI
+
+## Product
+
+Zep
+
+## Category
+
+Open-Source Agent Memory Platform
+
+---
+
+## Primary Problem Solved
+
+Zep provides long-term memory infrastructure for AI agents using temporal knowledge graphs. Rather than replaying entire conversations, it continuously builds and updates a graph of entities, relationships, and facts over time.
+
+---
+
+## Context Management Approach
+
+Zep combines:
+
+- Temporal Knowledge Graphs
+- Persistent Memory
+- Hybrid Retrieval
+- Graph Retrieval
+- Semantic Search
+- Full-text Search
+- Context Assembly
+- Provenance Tracking
+
+Instead of storing complete chat histories, Zep extracts facts, organizes them into a temporal graph, and retrieves only the most relevant context.
+
+---
+
+## Memory Architecture
+
+The platform maintains:
+
+- Entity Nodes
+- Relationship Edges
+- Episodic Nodes
+- Temporal Validity
+- Historical State Changes
+- Provenance Information
+
+The graph continuously evolves as user knowledge changes.
+
+---
+
+## Strengths
+
+- Temporal knowledge graphs
+- Excellent long-term memory
+- Historical reasoning
+- Provenance tracking
+- Token-efficient retrieval
+- Graph-based context engineering
+- Strong enterprise focus
+
+---
+
+## Observed Limitations
+
+Based on publicly available documentation:
+
+- No publicly documented future usefulness prediction before memory creation.
+- No publicly documented compression confidence score.
+- Memory decisions are not designed to explain *why* a fact was selected over alternatives.
+- Focus is on graph construction rather than a general adaptive context decision engine.
+
+---
+
+## Opportunity for ACIE
+
+Possible research opportunities include:
+
+- Future utility prediction
+- Explainable memory decisions
+- Confidence-aware context selection
+- Adaptive context intelligence layer
+- Multi-strategy context decision engine
+
+---
+
+## Notes
+
+Zep demonstrates that graph-based memory is a powerful approach for long-term reasoning. ACIE should complement—not replace—such systems by making better decisions before information is committed to memory.
+

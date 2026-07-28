@@ -22,3 +22,11 @@
 - LlamaIndex Memory Documentation
 - LlamaIndex Storage Documentation
 - LlamaIndex GitHub Repository
+
+## Zep
+
+- Zep Official Documentation
+- Graph Overview
+- Graphiti Documentation
+- Zep Research Paper
+- Zep GitHub Repository
