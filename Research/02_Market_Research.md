@@ -384,3 +384,94 @@ Possible research opportunities include:
 
 LangChain focuses on context engineering rather than providing one universal context compression strategy.
 
+# Company 5 — LlamaIndex
+
+## Company
+
+LlamaIndex
+
+## Product
+
+LlamaIndex Framework
+
+## Category
+
+Open-Source Data Framework for LLM Applications
+
+---
+
+## Primary Problem Solved
+
+LlamaIndex enables developers to connect Large Language Models with external data sources by providing tools for data ingestion, indexing, storage, retrieval, and agent memory.
+
+Unlike LangChain, which focuses on application orchestration, LlamaIndex primarily focuses on making external knowledge efficiently accessible to LLMs.
+
+---
+
+## Context Management Approach
+
+LlamaIndex provides:
+
+- Data indexing
+- Retrieval pipelines
+- Storage contexts
+- Short-term memory
+- Long-term memory
+- Configurable memory components
+
+Developers can customize memory implementations and combine retrieval with persistent storage.
+
+---
+
+## Memory Architecture
+
+The framework supports:
+
+- Short-term memory
+- Long-term memory
+- Custom memory implementations
+- Token-aware chat history
+- Persistent storage
+
+Memory components can be extended according to application requirements.
+
+---
+
+## Strengths
+
+- Excellent document indexing
+- Strong RAG ecosystem
+- Configurable memory architecture
+- Persistent storage support
+- Flexible retrieval pipeline
+- Active open-source community
+
+---
+
+## Observed Limitations
+
+Although LlamaIndex provides flexible memory and retrieval systems:
+
+- It does not provide one universal adaptive context compression engine.
+- Developers must decide how context should be compressed or filtered.
+- No publicly documented future usefulness prediction mechanism.
+- No publicly documented compression confidence metric.
+
+---
+
+## Opportunity for ACCE
+
+Possible research opportunities include:
+
+- Adaptive context compression
+- Automatic semantic importance scoring
+- Future utility estimation
+- Compression confidence scoring
+- Token-budget-aware context optimization
+
+---
+
+## Notes
+
+LlamaIndex provides powerful memory and retrieval abstractions while leaving context optimization policies to developers.
+
