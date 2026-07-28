@@ -30,3 +30,8 @@
 - Graphiti Documentation
 - Zep Research Paper
 - Zep GitHub Repository
+
+
+## GitHub Repositories
+
+LangChain GitHub Repository
