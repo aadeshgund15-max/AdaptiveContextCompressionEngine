@@ -84,3 +84,23 @@ Accepted
 
 Source:
 LangChain GitHub Architecture Analysis
+
+## Decision 04
+
+Title:
+Adopt Interface-First Architecture
+
+Reason:
+
+LangChain demonstrates that separating interfaces from implementations improves extensibility and maintainability.
+
+Decision:
+
+ACIE will define interfaces for memory providers, decision engines, and context sources before implementing concrete backends.
+
+Status:
+Accepted
+
+Source:
+LangChain GitHub Analysis
+

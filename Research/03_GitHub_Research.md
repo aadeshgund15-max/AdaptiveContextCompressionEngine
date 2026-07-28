@@ -68,61 +68,118 @@ master
 
 ## Primary Goal
 
-(To be researched.)
+LangChain is an open-source framework that simplifies the development of applications powered by Large Language Models (LLMs). It provides reusable abstractions for prompts, models, memory, retrieval, tools, agents, and execution workflows.
 
 ---
 
 ## Repository Structure
 
-(To be researched.)
+The repository follows a modular monorepo architecture.
+
+Key directories include:
+
+- libs/
+- docs/
+- cookbook/
+- templates/
+- scripts/
+- docker/
+
+Most implementation logic resides inside the `libs/` directory.
 
 ---
 
 ## Memory Architecture
 
-(To be researched.)
+LangChain provides memory abstractions that can be integrated into applications.
+
+Memory implementations are separated from the core framework, allowing developers to choose or extend memory behavior based on application requirements.
 
 ---
 
 ## Retrieval Strategy
 
-(To be researched.)
+LangChain supports retrieval through abstract retriever interfaces and integrations with external vector databases and retrieval systems.
+
+Retrieval logic is modular and provider-independent.
 
 ---
 
 ## Context Management
 
-(To be researched.)
+Context management is developer-controlled.
+
+Applications decide:
+
+- What information to retrieve
+- When to retrieve it
+- How to pass it to the language model
 
 ---
 
 ## Compression Strategy
 
-(To be researched.)
+LangChain includes utilities that can help reduce or filter context, but it does not provide a single adaptive context decision engine.
+
+Compression strategies are application-specific.
 
 ---
 
 ## Developer Experience
 
-(To be researched.)
+Strengths include:
+
+- Excellent documentation
+- Large ecosystem
+- Flexible abstractions
+- Extensive integrations
+- Active community
 
 ---
 
 ## Strengths
 
-(To be researched.)
+- Modular architecture
+- Strong extensibility
+- Provider independence
+- Large open-source ecosystem
+- Production-ready design
 
 ---
 
 ## Weaknesses
 
-(To be researched.)
+- Requires developers to design memory policies
+- No unified adaptive context intelligence layer
+- No explainable decision engine
+- No publicly documented future utility prediction
 
 ---
 
 ## Interesting Modules
 
-(To be researched.)
+- core
+- community
+- langchain
+- text-splitters
+
+---
+
+## Research Opportunities
+
+Possible opportunities include:
+
+- Adaptive context intelligence
+- Explainable memory decisions
+- Confidence-aware context selection
+- Predictive future utility estimation
+- Unified context orchestration across memory backends
+
+---
+
+## Notes
+
+LangChain emphasizes modular abstractions and integrations rather than prescribing a single memory management strategy. This flexibility provides opportunities for higher-level intelligence layers such as ACIE.
 
 ---
 

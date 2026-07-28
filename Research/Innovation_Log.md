@@ -326,3 +326,21 @@ Provenance is preserved, but decision reasoning is not exposed as a general expl
 
 Possible Innovation:
 Explainable Context Decision Engine.
+
+## Opportunity 26
+
+Source:
+LangChain GitHub
+
+Observation:
+
+Memory behavior is configurable but largely left to application developers.
+
+Possible Innovation:
+
+A unified context intelligence layer that automatically decides when to retain, retrieve, compress, summarize, or discard information.
+
+Status:
+
+Research Candidate
+
