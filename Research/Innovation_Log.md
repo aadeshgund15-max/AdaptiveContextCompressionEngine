@@ -236,3 +236,42 @@ No compression confidence score.
 Possible Innovation:
 Confidence-Based Context Compression.
 
+---
+
+## Opportunity 19
+
+Company:
+Mem0
+
+Observation:
+Memory ranking is powerful, but explanations for why a memory was selected or deprioritized are not publicly emphasized.
+
+Possible Innovation:
+Explainable Memory Decision Engine.
+
+---
+
+## Opportunity 20
+
+Company:
+Mem0
+
+Observation:
+Future usefulness prediction before memory creation is not publicly documented.
+
+Possible Innovation:
+Future Utility Prediction Module.
+
+---
+
+## Opportunity 21
+
+Company:
+Mem0
+
+Observation:
+Compression confidence values are not exposed.
+
+Possible Innovation:
+Confidence-aware Memory Compression.
+

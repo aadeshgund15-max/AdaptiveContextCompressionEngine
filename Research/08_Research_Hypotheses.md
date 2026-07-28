@@ -27,21 +27,27 @@ Pending Validation
 ## Hypothesis 2
 
 Title:
-Future Importance Prediction Can Improve Memory Quality
+Predicting Future Utility Before Memory Creation Can Improve Long-Term Memory Quality
 
 Type:
 Hypothesis
 
 Motivation:
-No reviewed competitor publicly documents predicting the future usefulness of context before compression.
+
+Current systems retrieve memories effectively after storage.
+
+There remains an opportunity to investigate whether predicting the future usefulness of information before committing it to memory can improve long-term memory quality.
 
 Evidence:
-Competitor analysis only.
+
+- Competitor Analysis
+- Mem0 Documentation
 
 Status:
+
 Pending Validation
 
----
+_ _ _
 
 ## Hypothesis 3
 

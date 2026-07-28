@@ -475,3 +475,83 @@ Possible research opportunities include:
 
 LlamaIndex provides powerful memory and retrieval abstractions while leaving context optimization policies to developers.
 
+# Company 6 — Mem0
+
+## Company
+
+Mem0
+
+## Product
+
+Mem0 Memory Layer
+
+## Category
+
+Open-Source AI Memory Framework
+
+---
+
+## Primary Problem Solved
+
+Mem0 provides a persistent memory layer for AI agents and LLM applications. Instead of storing entire conversations, it extracts useful information, stores memories efficiently, and retrieves only the most relevant memories during future interactions.
+
+---
+
+## Context Management Approach
+
+Mem0 combines multiple techniques:
+
+- Persistent memory
+- Semantic retrieval
+- Hybrid retrieval
+- Memory extraction
+- Memory updating
+- Graph-based memory (supported configurations)
+- Memory evaluation benchmarks
+
+Recent versions also introduce:
+
+- Criteria Retrieval
+- Memory Decay
+- Token-efficient retrieval
+
+---
+
+## Strengths
+
+- Purpose-built AI memory framework
+- Strong focus on token efficiency
+- Persistent memory
+- Hybrid retrieval
+- Criteria-based ranking
+- Memory evaluation framework
+- Active open-source development
+
+---
+
+## Observed Limitations
+
+Although Mem0 is one of the strongest competitors:
+
+- Compression decisions are not fully explainable to end users.
+- Future usefulness prediction before storing memories is not publicly described.
+- Compression confidence scores are not exposed.
+- Automatic reasoning preservation is not explicitly documented.
+
+---
+
+## Opportunity for ACCE
+
+Possible research opportunities include:
+
+- Explainable memory decisions
+- Predictive future usefulness estimation
+- Compression confidence scoring
+- Reasoning-aware compression
+
+---
+
+## Notes
+
+Mem0 represents one of the most advanced public AI memory systems currently available and significantly narrows the available research gap.
+
