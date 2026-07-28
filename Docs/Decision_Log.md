@@ -127,3 +127,47 @@ Accepted
 Source:
 
 LlamaIndex GitHub Analysis
+
+## Decision 06
+
+Title:
+Study Existing Memory Frameworks Before Designing ACIE
+
+Reason:
+
+Understanding existing memory frameworks prevents duplication and helps identify genuine research opportunities.
+
+Decision:
+
+Analyze Mem0 completely before finalizing ACIE architecture.
+
+Status:
+
+Accepted
+
+Source:
+
+GitHub Research
+
+---
+
+## Decision 07
+
+Title:
+Separate Memory from Memory Intelligence
+
+Reason:
+
+Existing frameworks provide storage mechanisms but not intelligent decision-making.
+
+Decision:
+
+ACIE will introduce an adaptive intelligence layer responsible for memory scoring, compression, retrieval recommendation, and forgetting strategies.
+
+Status:
+
+Accepted
+
+Source:
+
+Mem0 Analysis

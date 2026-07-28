@@ -1,3 +1,4 @@
 Repository,Stars,Language,Last Update,Purpose,Memory,Compression,Missing Features,Link,Status
 LangChain,https://github.com/langchain-ai/langchain,LLM Framework,MIT,Python,Pending,Pending,Pending,Pending,Pending
 LlamaIndex,https://github.com/run-llama/llama_index,Data Framework,MIT,Python,Completed,Completed,Completed,Completed,Completed
+Mem0,https://github.com/mem0ai/mem0,Memory Framework,Apache-2.0,Python,Completed,Completed,Completed,Completed,Completed

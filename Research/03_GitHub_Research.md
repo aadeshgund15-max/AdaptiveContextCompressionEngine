@@ -386,3 +386,179 @@ Potential research opportunities include:
 ## Notes
 
 LlamaIndex demonstrates a data-centric architecture. It focuses on organizing knowledge efficiently while leaving context intelligence decisions to application developers.
+
+---
+
+# Repository 3 — Mem0
+
+## Repository
+
+Mem0
+
+Repository URL:
+
+https://github.com/mem0ai/mem0
+
+---
+
+## Basic Information
+
+Organization:
+
+Mem0 AI
+
+Category:
+
+AI Memory Framework
+
+Primary Language:
+
+Python
+
+License:
+
+Apache License 2.0
+
+Repository Type:
+
+Standard Repository
+
+Current Status:
+
+Actively Maintained
+
+Stars:
+
+(Current GitHub value)
+
+Forks:
+
+(Current GitHub value)
+
+Main Branch:
+
+main
+
+---
+
+## Primary Goal
+
+Mem0 is an open-source memory framework that enables AI applications to remember useful information across conversations.
+
+Its primary objective is to intelligently store, retrieve, update, and manage long-term memories for Large Language Model applications.
+
+Unlike LangChain and LlamaIndex, Mem0 focuses specifically on memory management rather than orchestration or indexing.
+
+---
+
+## Repository Structure
+
+The repository follows a lightweight modular architecture.
+
+Major components include:
+
+- Core Memory Engine
+- Storage Layer
+- Embedding Support
+- LLM Providers
+- Configuration
+- API
+- Documentation
+- Examples
+
+---
+
+## Memory Architecture
+
+Mem0 provides persistent memory abstractions that allow AI systems to remember useful information across conversations.
+
+Developers can configure:
+
+- Long-term memory
+- Memory updates
+- Memory retrieval
+- Storage providers
+
+---
+
+## Retrieval Strategy
+
+Retrieval is based on stored memories.
+
+Developers configure retrieval behavior while Mem0 provides the underlying memory infrastructure.
+
+---
+
+## Context Management
+
+Context management is memory-centric.
+
+The framework focuses on storing and retrieving memories rather than dynamically optimizing the entire context window.
+
+---
+
+## Compression Strategy
+
+No dedicated adaptive context compression engine is provided.
+
+Compression strategies remain application-dependent.
+
+---
+
+## Developer Experience
+
+Strengths include:
+
+- Simple API
+- Good documentation
+- Easy integration
+- Persistent memory support
+
+---
+
+## Strengths
+
+- AI memory specialization
+- Persistent memory
+- Modular architecture
+- Easy integration
+- Active development
+
+---
+
+## Weaknesses
+
+- No adaptive context intelligence
+- No explainable memory decisions
+- No future importance prediction
+- No compression confidence score
+- Limited context optimization strategy
+
+---
+
+## Interesting Modules
+
+- Memory
+- Storage
+- Embeddings
+- Configuration
+- API
+
+---
+
+## Research Opportunities
+
+Potential opportunities include:
+
+- Adaptive Context Intelligence
+- Explainable Memory Decisions
+- Future Importance Prediction
+- Confidence-based Compression
+- Dynamic Context Optimization
+
+---
+
+## Notes
+
+Mem0 focuses on memory management but does not expose a dedicated intelligence layer responsible for deciding what should be remembered, compressed, merged, retrieved, or forgotten.
+

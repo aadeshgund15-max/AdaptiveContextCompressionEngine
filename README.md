@@ -62,3 +62,18 @@ Presentation/
 ## 📄 License
 
 MIT License
+
+## Sustainable Development Goals (SDG)
+
+### Primary SDG
+
+**SDG 9 – Industry, Innovation and Infrastructure**
+
+Adaptive Context Compression Engine (ACCE) contributes to SDG 9 by advancing AI infrastructure through intelligent context management, adaptive memory compression, and scalable decision-making systems for Large Language Models (LLMs). The project aims to improve computational efficiency while enabling more reliable and intelligent AI applications.
+
+### Secondary SDGs
+
+- **SDG 4 – Quality Education:** Enables more personalized and context-aware AI tutors.
+- **SDG 8 – Decent Work and Economic Growth:** Improves productivity through intelligent AI assistants.
+- **SDG 12 – Responsible Consumption and Production:** Optimizes token usage and computational resources.
+- **SDG 13 – Climate Action:** Indirectly reduces energy consumption by improving AI efficiency.
