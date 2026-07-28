@@ -104,3 +104,26 @@ Accepted
 Source:
 LangChain GitHub Analysis
 
+## Decision 05
+
+Title:
+
+Separate Retrieval from Intelligence
+
+Reason:
+
+LlamaIndex demonstrates that retrieval should remain modular and independent.
+
+Decision:
+
+ACIE will treat retrieval as a separate subsystem.
+
+The intelligence layer will make decisions but will not replace retrieval frameworks.
+
+Status:
+
+Accepted
+
+Source:
+
+LlamaIndex GitHub Analysis

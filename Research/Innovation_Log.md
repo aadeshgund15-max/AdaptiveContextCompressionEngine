@@ -344,3 +344,20 @@ Status:
 
 Research Candidate
 
+## Opportunity 27
+
+Source:
+
+LlamaIndex GitHub
+
+Observation:
+
+Retrieval is powerful, but decision-making remains developer controlled.
+
+Possible Innovation:
+
+Adaptive Context Intelligence Layer that automatically determines retrieval, compression, summarization, and forgetting strategies.
+
+Status:
+
+Research Candidate

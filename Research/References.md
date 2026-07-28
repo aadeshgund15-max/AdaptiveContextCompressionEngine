@@ -35,3 +35,7 @@
 ## GitHub Repositories
 
 LangChain GitHub Repository
+
+## GitHub Repositories
+
+LlamaIndex GitHub Repository

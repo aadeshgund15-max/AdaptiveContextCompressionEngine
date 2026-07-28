@@ -97,3 +97,46 @@ Possible Inspiration for ACIE:
 
 Create an `integrations/` module where adapters for LangChain, LlamaIndex, Mem0, Zep, and future frameworks can live independently of the decision engine.
 
+---
+
+# LlamaIndex
+
+Status:
+✅ Verified
+
+---
+
+## Initial Observations
+
+The repository follows a modular design with a strong emphasis on retrieval and indexing.
+
+Core implementation appears separated from integrations.
+
+---
+
+## Architectural Patterns
+
+- Separation of concerns
+- Data-first architecture
+- Extensible indexing
+- Provider-independent retrieval
+
+---
+
+## Possible Inspiration for ACIE
+
+Separate:
+
+- Intelligence
+- Retrieval
+- Storage
+- Memory
+- Compression
+
+into independent modules.
+
+This improves scalability and allows different retrieval backends without changing the decision engine.
+
+Status:
+
+✅ Verified

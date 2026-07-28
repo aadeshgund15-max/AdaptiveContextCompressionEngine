@@ -127,3 +127,78 @@ Potential Lesson for ACIE:
 
 Keep provider-specific implementations outside the core intelligence engine.
 
+---
+
+# LlamaIndex
+
+Status:
+✅ Verified
+
+---
+
+## Architecture Style
+
+Monorepo
+
+---
+
+## Initial Observation
+
+LlamaIndex is organized around knowledge ingestion, indexing, retrieval, and storage rather than application orchestration.
+
+The architecture separates:
+
+- Core abstractions
+- Retrieval
+- Storage
+- Indexes
+- Query engines
+- Integrations
+
+---
+
+## Architectural Characteristics
+
+- Data-centric design
+- Retrieval-first architecture
+- Modular packages
+- Persistent storage support
+- Extensible indexing system
+
+---
+
+## Lesson for ACIE
+
+ACIE should remain independent of any single retrieval implementation.
+
+Instead of replacing retrieval frameworks, it should intelligently decide:
+
+- What should be remembered
+- What should be compressed
+- What should be retrieved
+- What should be discarded
+
+Status:
+
+✅ Verified
+
+
+
+---
+
+# LangChain vs LlamaIndex
+
+| Aspect | LangChain | LlamaIndex |
+|---------|-----------|------------|
+| Primary Focus | LLM Application Framework | Data Framework |
+| Main Strength | Workflow Orchestration | Data Indexing & Retrieval |
+| Architecture | Interface-first | Retrieval-first |
+| Memory | Flexible Abstractions | Retrieval-backed Memory |
+| Developer Control | High | High |
+| Research Opportunity | Context Intelligence | Retrieval Intelligence |
+
+Observation:
+
+The two frameworks complement rather than replace each other.
+
+This suggests that ACIE should function as an orchestration and decision layer capable of working with either framework.
