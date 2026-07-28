@@ -24,17 +24,45 @@ Organization:
 
 LangChain AI
 
+Repository:
+
+LangChain
+
+Repository URL:
+
+https://github.com/langchain-ai/langchain
+
 Category:
 
-LLM Framework
+LLM Application Framework
+
+Primary Language:
+
+Python
 
 License:
 
-MIT
+MIT License
 
-Language:
+Repository Type:
 
-Python
+Monorepo
+
+Current Status:
+
+Actively Maintained
+
+Stars:
+
+(143K)
+
+Forks:
+
+(23.8K)
+
+Main Branch:
+
+master
 
 ---
 

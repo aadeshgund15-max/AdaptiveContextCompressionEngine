@@ -4,18 +4,30 @@
 
 # LangChain
 
-Interesting Files
+## Repository Style
 
-(To be researched.)
+Python Monorepo
 
-Interesting Classes
+---
 
-(To be researched.)
+## Initial Observations
 
-Interesting Algorithms
+- Large modular architecture
+- Multiple independent packages
+- Strong separation of concerns
+- Extensive documentation
+- Production-ready engineering practices
 
-(To be researched.)
+---
 
-Reusable Ideas
+## Files To Study Later
 
-(To be researched.)
+libs/
+docs/
+cookbook/
+
+---
+
+Status
+
+Repository exploration started.

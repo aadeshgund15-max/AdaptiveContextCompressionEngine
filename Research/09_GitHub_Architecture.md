@@ -2,24 +2,39 @@
 
 ---
 
-# LangChain
+# Repository
 
-Architecture Notes
+LangChain
 
-(To be filled.)
+---
 
-Memory Components
+## Architecture Style
 
-(To be filled.)
+Monorepo
 
-Retrieval Components
+---
 
-(To be filled.)
+## Top-Level Structure
 
-Interesting Patterns
+.github/
+docs/
+libs/
+cookbook/
+templates/
+docker/
+scripts/
 
-(To be filled.)
+---
 
-Ideas for ACIE
+## Initial Observation
 
-(To be filled.)
+The project follows a modular monorepo architecture where different packages and components are organized into separate directories.
+
+Most implementation logic appears to reside inside the `libs/` directory.
+
+Documentation is separated from source code.
+
+Development tooling and automation are isolated from application logic.
+
+Status:
+Verified from repository structure.
