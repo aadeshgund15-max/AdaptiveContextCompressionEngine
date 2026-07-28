@@ -65,3 +65,22 @@ Provides more accurate and fair technical analysis.
 
 Status:
 Accepted
+
+## Decision 03
+
+Title:
+Use Layered Architecture
+
+Reason:
+
+Analysis of LangChain shows that separating interfaces, integrations, and implementations improves scalability and maintainability.
+
+Decision:
+
+ACIE will adopt a layered architecture with a core decision engine and separate integration modules.
+
+Status:
+Accepted
+
+Source:
+LangChain GitHub Architecture Analysis

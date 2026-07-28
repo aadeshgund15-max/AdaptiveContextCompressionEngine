@@ -73,3 +73,27 @@ Benefits:
 Possible Inspiration for ACIE:
 
 Create a small "ACIE Core" containing only interfaces and decision contracts, while placing storage backends and integrations into separate modules.
+
+---
+
+## libs/community
+
+Status:
+✅ Verified
+
+Observation:
+
+Provider-specific implementations are isolated from the framework's core abstractions.
+
+Architectural Benefits:
+
+- Lower coupling
+- Better modularity
+- Easier testing
+- Independent updates
+- Improved scalability
+
+Possible Inspiration for ACIE:
+
+Create an `integrations/` module where adapters for LangChain, LlamaIndex, Mem0, Zep, and future frameworks can live independently of the decision engine.
+
