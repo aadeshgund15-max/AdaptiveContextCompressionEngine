@@ -4,50 +4,39 @@ Memory Manager
 """
 
 from Backend.database.database import Database
+from Backend.database.chroma_database import ChromaDatabase
+from Backend.services.embedding_service import EmbeddingService
 
 
 class MemoryManager:
 
     def __init__(self):
 
-        self.database = Database()
+        self.sqlite = Database()
+        self.chroma = ChromaDatabase()
+        self.embedding_service = EmbeddingService()
 
     def store(self, context, importance, confidence, decision):
 
-        self.database.insert_memory(
-
+        memory_id = self.sqlite.insert_memory(
             context["query"],
-
             importance,
-
             confidence,
-
             decision
         )
 
+        embedding = self.embedding_service.generate_embedding(
+            context["query"]
+        )
+
+        self.chroma.add_memory(
+            memory_id,
+            context["query"],
+            embedding
+        )
+
+        return memory_id
+
     def get_all_memories(self):
 
-        return self.database.fetch_all()
-
-
-if __name__ == "__main__":
-
-    manager = MemoryManager()
-
-    sample = {
-
-        "query": "Explain semantic compression."
-    }
-
-    manager.store(
-
-        sample,
-
-        85,
-
-        0.90,
-
-        "STORE"
-    )
-
-    print(manager.get_all_memories())
+        return self.sqlite.fetch_all()

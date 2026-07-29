@@ -17,7 +17,6 @@ def main():
     print("Adaptive Context Intelligence Engine (ACIE)")
     print("=" * 60)
 
-    # Initialize modules
     collector = ContextCollector()
     scorer = ImportanceScorer()
     confidence_calculator = ConfidenceCalculator()
@@ -25,7 +24,6 @@ def main():
     memory_manager = MemoryManager()
     retriever = Retriever()
 
-    # Collect context
     context = collector.collect(
         query="Explain adaptive context compression.",
         conversation=[
@@ -38,61 +36,44 @@ def main():
         ]
     )
 
-    # Calculate importance
     importance = scorer.calculate_score(context)
-
-    # Calculate confidence
     confidence = confidence_calculator.calculate_confidence(context)
 
-    # Decision
     decision = decision_engine.decide(
         importance,
         confidence
     )
 
-    # Store memory if required
     if decision == "STORE":
-        memory_manager.store(
+
+        memory_id = memory_manager.store(
             context,
             importance,
             confidence,
             decision
         )
 
-    # Display collected context
+        print("\nMemory stored successfully.")
+        print("Memory ID :", memory_id)
+
     print("\nCollected Context")
     print(context)
 
-    # Display scores
     print("\nImportance Score :", importance)
     print("Confidence Score :", confidence)
     print("Decision :", decision)
 
-    # Display all stored memories
-    print("\nStored Memories")
+    print("\nSQLite Memories")
 
-    memories = memory_manager.get_all_memories()
+    for memory in memory_manager.get_all_memories():
+        print(memory)
 
-    if len(memories) == 0:
-        print("No memories stored.")
+    print("\nKeyword Retrieval")
 
-    else:
-        for memory in memories:
-            print(memory)
+    results = retriever.retrieve("compression")
 
-    # Retrieve memories using keyword search
-    print("\nRetrieved Memories")
-
-    keyword = "compression"
-
-    retrieved = retriever.retrieve(keyword)
-
-    if len(retrieved) == 0:
-        print("No matching memories found.")
-
-    else:
-        for memory in retrieved:
-            print(memory)
+    for item in results:
+        print(item)
 
     print("\nPipeline executed successfully.")
 

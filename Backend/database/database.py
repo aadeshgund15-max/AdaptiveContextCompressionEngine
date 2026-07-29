@@ -9,14 +9,17 @@ import sqlite3
 class Database:
 
     def __init__(self, db_name="acie.db"):
+
         self.connection = sqlite3.connect(db_name)
+
         self.cursor = self.connection.cursor()
+
         self.create_table()
 
     def create_table(self):
 
         self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS memory (
+        CREATE TABLE IF NOT EXISTS memory(
 
             id INTEGER PRIMARY KEY AUTOINCREMENT,
 
@@ -35,13 +38,17 @@ class Database:
     def insert_memory(self, query, importance, confidence, decision):
 
         self.cursor.execute("""
-        INSERT INTO memory
-        (query, importance, confidence, decision)
 
-        VALUES (?, ?, ?, ?)
+        INSERT INTO memory
+        (query,importance,confidence,decision)
+
+        VALUES (?,?,?,?)
+
         """, (query, importance, confidence, decision))
 
         self.connection.commit()
+
+        return self.cursor.lastrowid
 
     def fetch_all(self):
 
@@ -50,6 +57,7 @@ class Database:
         return self.cursor.fetchall()
 
     def close(self):
+
         self.connection.close()
 
 
@@ -57,13 +65,4 @@ if __name__ == "__main__":
 
     db = Database()
 
-    db.insert_memory(
-        "Explain context compression",
-        92,
-        0.95,
-        "STORE"
-    )
-
     print(db.fetch_all())
-
-    db.close()

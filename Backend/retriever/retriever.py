@@ -9,12 +9,10 @@ from Backend.memory.memory_manager import MemoryManager
 class Retriever:
 
     def __init__(self):
+
         self.memory_manager = MemoryManager()
 
     def retrieve(self, keyword):
-        """
-        Retrieve memories containing the given keyword.
-        """
 
         memories = self.memory_manager.get_all_memories()
 
@@ -25,6 +23,7 @@ class Retriever:
             query = memory[1]
 
             if keyword.lower() in query.lower():
+
                 results.append(memory)
 
         return results
@@ -34,16 +33,9 @@ if __name__ == "__main__":
 
     retriever = Retriever()
 
-    keyword = "compression"
+    results = retriever.retrieve("compression")
 
-    results = retriever.retrieve(keyword)
+    print("\nRetrieved Memories\n")
 
-    print("Retrieved Memories")
-
-    if len(results) == 0:
-        print("No matching memories found.")
-
-    else:
-
-        for item in results:
-            print(item)
+    for item in results:
+        print(item)

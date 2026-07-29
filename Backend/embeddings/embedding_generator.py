@@ -3,26 +3,18 @@ Adaptive Context Intelligence Engine (ACIE)
 Embedding Generator Module
 """
 
-from sentence_transformers import SentenceTransformer
+from Backend.services.embedding_service import EmbeddingService
 
 
 class EmbeddingGenerator:
 
     def __init__(self):
 
-        print("Loading embedding model...")
-
-        self.model = SentenceTransformer(
-            "all-MiniLM-L6-v2"
-        )
-
-        print("Model loaded successfully.")
+        self.service = EmbeddingService()
 
     def generate_embedding(self, text):
 
-        embedding = self.model.encode(text)
-
-        return embedding.tolist()
+        return self.service.generate_embedding(text)
 
 
 if __name__ == "__main__":
@@ -34,13 +26,10 @@ if __name__ == "__main__":
     embedding = generator.generate_embedding(sentence)
 
     print("\nSentence:")
-
     print(sentence)
 
     print("\nEmbedding Dimension:")
-
     print(len(embedding))
 
     print("\nFirst 10 Values:")
-
     print(embedding[:10])
