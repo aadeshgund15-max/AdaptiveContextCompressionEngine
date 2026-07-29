@@ -68,12 +68,22 @@ def main():
     for memory in memory_manager.get_all_memories():
         print(memory)
 
-    print("\nKeyword Retrieval")
+    print("\nSemantic Retrieval")
 
-    results = retriever.retrieve("compression")
+    semantic_results = retriever.retrieve(
+        "memory optimization"
+    )
 
-    for item in results:
-        print(item)
+    documents = semantic_results["documents"][0]
+    ids = semantic_results["ids"][0]
+    distances = semantic_results["distances"][0]
+
+    for i in range(len(ids)):
+
+        print("-" * 50)
+        print("Memory ID :", ids[i])
+        print("Query     :", documents[i])
+        print("Distance  :", distances[i])
 
     print("\nPipeline executed successfully.")
 

@@ -1,30 +1,27 @@
 """
 Adaptive Context Intelligence Engine (ACIE)
-Retriever Module
+Semantic Retriever
 """
 
-from Backend.memory.memory_manager import MemoryManager
+from Backend.database.chroma_database import ChromaDatabase
+from Backend.services.embedding_service import EmbeddingService
 
 
 class Retriever:
 
     def __init__(self):
 
-        self.memory_manager = MemoryManager()
+        self.chroma = ChromaDatabase()
+        self.embedding_service = EmbeddingService()
 
-    def retrieve(self, keyword):
+    def retrieve(self, query, top_k=5):
 
-        memories = self.memory_manager.get_all_memories()
+        embedding = self.embedding_service.generate_embedding(query)
 
-        results = []
-
-        for memory in memories:
-
-            query = memory[1]
-
-            if keyword.lower() in query.lower():
-
-                results.append(memory)
+        results = self.chroma.search(
+            embedding,
+            top_k
+        )
 
         return results
 
@@ -33,9 +30,10 @@ if __name__ == "__main__":
 
     retriever = Retriever()
 
-    results = retriever.retrieve("compression")
+    results = retriever.retrieve(
+        "memory optimization"
+    )
 
-    print("\nRetrieved Memories\n")
+    print("\nSemantic Search Results\n")
 
-    for item in results:
-        print(item)
+    print(results)
