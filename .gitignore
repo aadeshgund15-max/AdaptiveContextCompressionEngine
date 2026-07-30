@@ -24,3 +24,8 @@ venv/
 # OS Files
 Thumbs.db
 .DS_Store
+# ChromaDB
+chromadb/
+
+# Hugging Face Cache
+.cache/
