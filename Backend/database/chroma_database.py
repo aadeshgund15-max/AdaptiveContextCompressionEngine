@@ -4,13 +4,19 @@ ChromaDB Database Module
 """
 
 import chromadb
+import shutil
+import os
 
 
 class ChromaDatabase:
 
     def __init__(self):
 
-        self.client = chromadb.PersistentClient(path="chromadb")
+        self.db_path = "chromadb"
+
+        self.client = chromadb.PersistentClient(
+            path=self.db_path
+        )
 
         self.collection = self.client.get_or_create_collection(
             name="acie_memory"
@@ -31,7 +37,6 @@ class ChromaDatabase:
             )
 
         except Exception:
-
             # Ignore duplicate IDs
             pass
 
@@ -45,6 +50,10 @@ class ChromaDatabase:
 
         )
 
+    def get_all_memories(self):
+
+        return self.collection.get()
+
     def get_all_ids(self):
 
         return self.collection.get()["ids"]
@@ -52,3 +61,46 @@ class ChromaDatabase:
     def count(self):
 
         return self.collection.count()
+
+    def delete_all(self):
+
+        ids = self.get_all_ids()
+
+        if len(ids) > 0:
+
+            self.collection.delete(
+                ids=ids
+            )
+
+    def reset_database(self):
+
+        try:
+
+            self.client.delete_collection(
+                "acie_memory"
+            )
+
+        except Exception:
+            pass
+
+        if os.path.exists(self.db_path):
+
+            shutil.rmtree(self.db_path)
+
+        self.client = chromadb.PersistentClient(
+            path=self.db_path
+        )
+
+        self.collection = self.client.get_or_create_collection(
+            name="acie_memory"
+        )
+
+
+if __name__ == "__main__":
+
+    chroma = ChromaDatabase()
+
+    print("Total Memories :", chroma.count())
+
+    print("\nMemory IDs :")
+    print(chroma.get_all_ids())

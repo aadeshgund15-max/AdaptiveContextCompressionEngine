@@ -6,7 +6,7 @@ Importance Scorer Module
 
 class ImportanceScorer:
     """
-    Calculates the importance score of a given context.
+    Calculates the importance score of a context.
     """
 
     def __init__(self):
@@ -14,53 +14,82 @@ class ImportanceScorer:
 
     def calculate_score(self, context):
         """
-        Calculate an importance score.
-
-        Parameters:
-            context (dict)
+        Calculate importance score.
 
         Returns:
-            int
+            int (0 - 100)
         """
 
         score = 0
 
-        # Query length
+        # -------------------------
+        # Query Length
+        # -------------------------
         query = context.get("query", "")
-        score += min(len(query), 30)
 
-        # Conversation history
+        if len(query) > 15:
+            score += 25
+        elif len(query) > 5:
+            score += 15
+
+        # -------------------------
+        # Conversation History
+        # -------------------------
         conversation = context.get("conversation", [])
-        score += len(conversation) * 10
 
+        score += min(len(conversation) * 10, 30)
+
+        # -------------------------
         # Documents
+        # -------------------------
         documents = context.get("documents", [])
-        score += len(documents) * 15
 
-        # Maximum score = 100
-        if score > 100:
-            score = 100
+        score += min(len(documents) * 10, 20)
+
+        # -------------------------
+        # Bonus Keywords
+        # -------------------------
+        keywords = [
+            "context",
+            "compression",
+            "embedding",
+            "retrieval",
+            "semantic",
+            "memory",
+            "database",
+            "vector",
+            "rag",
+            "agent"
+        ]
+
+        lower_query = query.lower()
+
+        for word in keywords:
+            if word in lower_query:
+                score += 5
+
+        # Maximum Score = 100
+        score = min(score, 100)
 
         return score
 
 
 if __name__ == "__main__":
 
+    scorer = ImportanceScorer()
+
     sample_context = {
-        "query": "Explain semantic context compression.",
+        "query": "Explain vector databases",
         "conversation": [
-            "What is RAG?",
-            "Explain vector databases."
+            "What is semantic search?",
+            "How are embeddings created?"
         ],
         "documents": [
-            "Paper 1",
-            "Paper 2",
-            "Paper 3"
+            "Research Paper A",
+            "Research Paper B"
         ]
     }
 
-    scorer = ImportanceScorer()
+    importance = scorer.calculate_score(sample_context)
 
-    score = scorer.calculate_score(sample_context)
-
-    print("Importance Score:", score)
+    print("Importance Score :", importance)

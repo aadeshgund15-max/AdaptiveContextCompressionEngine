@@ -5,12 +5,23 @@ Token Estimator
 
 
 class TokenEstimator:
+    """
+    Estimates the number of tokens in a text.
+    Approximation:
+    1 token ≈ 0.75 words
+    """
 
-    def estimate_tokens(self, text):
+    def __init__(self):
+        pass
 
-        words = text.split()
+    def estimate(self, text):
 
-        estimated_tokens = int(len(words) * 1.3)
+        if not text:
+            return 0
+
+        words = len(text.split())
+
+        estimated_tokens = int(words / 0.75)
 
         return estimated_tokens
 
@@ -19,12 +30,12 @@ if __name__ == "__main__":
 
     estimator = TokenEstimator()
 
-    sentence = "Adaptive context compression reduces prompt size."
+    sample = """
+    Adaptive Context Compression improves LLM memory efficiency.
+    """
 
-    print("Sentence:")
-    print(sentence)
+    print("Text:")
+    print(sample)
 
-    print()
-
-    print("Estimated Tokens:")
-    print(estimator.estimate_tokens(sentence))
+    print("\nEstimated Tokens:")
+    print(estimator.estimate(sample))

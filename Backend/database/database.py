@@ -10,7 +10,10 @@ class Database:
 
     def __init__(self, db_name="acie.db"):
 
-        self.connection = sqlite3.connect(db_name)
+        self.connection = sqlite3.connect(
+            db_name,
+            check_same_thread=False
+        )
 
         self.cursor = self.connection.cursor()
 
@@ -37,14 +40,14 @@ class Database:
 
     def insert_memory(self, query, importance, confidence, decision):
 
-        self.cursor.execute("""
-
-        INSERT INTO memory
-        (query,importance,confidence,decision)
-
-        VALUES (?,?,?,?)
-
-        """, (query, importance, confidence, decision))
+        self.cursor.execute(
+            """
+            INSERT INTO memory
+            (query, importance, confidence, decision)
+            VALUES (?, ?, ?, ?)
+            """,
+            (query, importance, confidence, decision)
+        )
 
         self.connection.commit()
 
