@@ -5,56 +5,56 @@ Redundancy Detector
 
 
 class RedundancyDetector:
+    """
+    Removes duplicate sentences while preserving order.
+    """
 
-    def remove_duplicates(self, memories):
+    def __init__(self):
+        pass
 
-        unique = []
+    def remove_duplicates(self, sentences):
 
+        unique_sentences = []
         seen = set()
 
-        for memory in memories:
+        for sentence in sentences:
 
-            cleaned = memory.strip().lower()
+            cleaned = sentence.strip()
 
-            if cleaned not in seen:
+            if cleaned and cleaned not in seen:
 
                 seen.add(cleaned)
+                unique_sentences.append(cleaned)
 
-                unique.append(memory)
-
-        return unique
+        return unique_sentences
 
 
 if __name__ == "__main__":
 
     detector = RedundancyDetector()
 
-    memories = [
+    sample = [
 
-        "Explain adaptive context compression.",
+        "Vector databases store embeddings.",
 
-        "Explain adaptive context compression.",
+        "Embeddings improve semantic search.",
 
-        "Explain Semantic Compression.",
+        "Vector databases store embeddings.",
 
-        "Explain semantic compression.",
+        "Adaptive Context Compression reduces tokens.",
 
-        "Memory optimization techniques.",
-
-        " memory optimization techniques. "
+        "Embeddings improve semantic search."
 
     ]
 
-    print("Original Memories:")
+    print("Original Sentences:\n")
 
-    for memory in memories:
+    for sentence in sample:
+        print("-", sentence)
 
-        print("-", memory)
+    result = detector.remove_duplicates(sample)
 
-    compressed = detector.remove_duplicates(memories)
+    print("\nAfter Removing Duplicates:\n")
 
-    print("\nAfter Removing Duplicates:")
-
-    for memory in compressed:
-
-        print("-", memory)
+    for sentence in result:
+        print("-", sentence)
