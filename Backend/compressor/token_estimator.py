@@ -25,6 +25,11 @@ class TokenEstimator:
 
         return estimated_tokens
 
+    # Alias for compatibility
+    def estimate_tokens(self, text):
+
+        return self.estimate(text)
+
 
 if __name__ == "__main__":
 
@@ -38,4 +43,4 @@ if __name__ == "__main__":
     print(sample)
 
     print("\nEstimated Tokens:")
-    print(estimator.estimate(sample))
+    print(estimator.estimate_tokens(sample))

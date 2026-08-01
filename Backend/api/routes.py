@@ -11,10 +11,17 @@ from Backend.scorer.confidence_calculator import ConfidenceCalculator
 from Backend.decision_engine.decision_engine import DecisionEngine
 from Backend.memory.memory_manager import MemoryManager
 from Backend.retriever.retriever import Retriever
+from Backend.compressor.context_compressor import ContextCompressor
+from Backend.hybrid.hybrid_retriever import HybridRetriever
+from Backend.context_builder.context_window_builder import ContextWindowBuilder
+from Backend.pipeline.memory_pipeline import MemoryPipeline
+from Backend.reflection.reflection_engine import ReflectionEngine
 
 from Backend.models.request_models import (
     StoreRequest,
-    RetrieveRequest
+    RetrieveRequest,
+    CompressRequest,
+    ContextRequest
 )
 
 router = APIRouter()
@@ -25,15 +32,25 @@ confidence_calculator = ConfidenceCalculator()
 decision_engine = DecisionEngine()
 memory_manager = MemoryManager()
 retriever = Retriever()
+compressor = ContextCompressor()
+hybrid_retriever = HybridRetriever()
+context_builder = ContextWindowBuilder()
+
+pipeline = MemoryPipeline()
+reflection_engine = ReflectionEngine()
 
 
 @router.get("/")
 def root():
 
     return {
+
         "project": "Adaptive Context Intelligence Engine",
-        "version": "1.3.0",
+
+        "version": "2.0.0",
+
         "status": "Running"
+
     }
 
 
@@ -41,8 +58,11 @@ def root():
 def health():
 
     return {
+
         "status": "Healthy",
+
         "message": "ACIE API is running successfully."
+
     }
 
 
@@ -50,8 +70,11 @@ def health():
 def version():
 
     return {
+
         "project": "Adaptive Context Intelligence Engine",
-        "version": "1.3.0"
+
+        "version": "2.0.0"
+
     }
 
 
@@ -61,8 +84,11 @@ def get_memories():
     memories = memory_manager.get_all_memories()
 
     return {
+
         "count": len(memories),
+
         "memories": memories
+
     }
 
 
@@ -79,17 +105,16 @@ def store_memory(request: StoreRequest):
 
     )
 
-    importance = importance_scorer.calculate_score(
-        context
-    )
+    importance = importance_scorer.calculate_score(context)
 
-    confidence = confidence_calculator.calculate_confidence(
-        context
-    )
+    confidence = confidence_calculator.calculate_confidence(context)
 
     decision = decision_engine.decide(
+
         importance,
+
         confidence
+
     )
 
     if decision == "STORE":
@@ -110,73 +135,27 @@ def store_memory(request: StoreRequest):
 
             "stored": True,
 
-            "message": "Memory stored successfully.",
-
             "memory_id": memory_id,
 
             "importance": importance,
 
             "confidence": confidence,
 
-            "decision": decision,
-
-            "reason": "Importance and confidence satisfy the storage threshold."
+            "decision": decision
 
         }
 
-    elif decision == "COMPRESS":
+    return {
 
-        return {
+        "stored": False,
 
-            "stored": False,
+        "importance": importance,
 
-            "message": "Memory marked for compression.",
+        "confidence": confidence,
 
-            "importance": importance,
+        "decision": decision
 
-            "confidence": confidence,
-
-            "decision": decision,
-
-            "reason": "Memory is useful but does not satisfy the storage threshold."
-
-        }
-
-    elif decision == "MERGE":
-
-        return {
-
-            "stored": False,
-
-            "message": "Memory should be merged with an existing memory.",
-
-            "importance": importance,
-
-            "confidence": confidence,
-
-            "decision": decision,
-
-            "reason": "Memory has moderate importance."
-
-        }
-
-    else:
-
-        return {
-
-            "stored": False,
-
-            "message": "Memory discarded.",
-
-            "importance": importance,
-
-            "confidence": confidence,
-
-            "decision": decision,
-
-            "reason": "Memory importance is too low."
-
-        }
+    }
 
 
 @router.post("/retrieve")
@@ -194,8 +173,128 @@ def retrieve_memory(request: RetrieveRequest):
 
         "query": request.query,
 
-        "top_k": request.top_k,
+        "results": results
+
+    }
+
+
+@router.post("/hybrid-retrieve")
+def hybrid_retrieve(request: RetrieveRequest):
+
+    results = hybrid_retriever.retrieve(
+
+        request.query,
+
+        request.top_k
+
+    )
+
+    return {
+
+        "query": request.query,
+
+        "retrieval_type": "Hybrid",
 
         "results": results
 
     }
+
+
+@router.post("/compress")
+def compress_context(request: CompressRequest):
+
+    return compressor.compress(
+
+        request.memories
+
+    )
+
+
+@router.post("/build-context")
+def build_context(request: ContextRequest):
+
+    ranked = hybrid_retriever.retrieve(
+
+        request.query,
+
+        request.top_k
+
+    )
+
+    result = context_builder.build(
+
+        ranked,
+
+        request.token_budget
+
+    )
+
+    return {
+
+        "query": request.query,
+
+        "result": result
+
+    }
+
+
+# ==========================
+# Reflection API
+# ==========================
+
+@router.get("/reflect")
+def reflect():
+
+    memories = memory_manager.get_all_memories()
+
+    formatted = []
+
+    for memory in memories:
+
+        formatted.append({
+
+            "id": memory[0],
+
+            "query": memory[1],
+
+            "importance": memory[2],
+
+            "confidence": memory[3],
+
+            "decision": memory[4],
+
+            "created_at": memory[5],
+
+            "last_accessed": memory[6],
+
+            "access_count": memory[7],
+
+            "state": memory[8]
+
+        })
+
+    return reflection_engine.generate_report(
+
+        formatted
+
+    )
+
+
+# ==========================
+# Complete Pipeline API
+# ==========================
+
+@router.post("/pipeline")
+def execute_pipeline(request: StoreRequest):
+
+    result = pipeline.process(
+
+        query=request.query,
+
+        conversation=request.conversation,
+
+        documents=request.documents
+
+    )
+
+    return result

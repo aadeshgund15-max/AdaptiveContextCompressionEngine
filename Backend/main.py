@@ -1,92 +1,53 @@
 """
 Adaptive Context Intelligence Engine (ACIE)
-Main Entry Point
+FastAPI Main Entry Point
 """
 
-from Backend.collector.context_collector import ContextCollector
-from Backend.scorer.importance_scorer import ImportanceScorer
-from Backend.scorer.confidence_calculator import ConfidenceCalculator
-from Backend.decision_engine.decision_engine import DecisionEngine
-from Backend.memory.memory_manager import MemoryManager
-from Backend.retriever.retriever import Retriever
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from Backend.api.routes import router
+
+app = FastAPI(
+    title="Adaptive Context Intelligence Engine (ACIE)",
+    description="AI Memory System with Hybrid Retrieval and Context Compression",
+    version="2.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(router)
 
 
-def main():
+@app.get("/")
+def root():
+    return {
+        "project": "Adaptive Context Intelligence Engine",
+        "version": "2.0.0",
+        "status": "Running"
+    }
 
-    print("=" * 60)
-    print("Adaptive Context Intelligence Engine (ACIE)")
-    print("=" * 60)
 
-    collector = ContextCollector()
-    scorer = ImportanceScorer()
-    confidence_calculator = ConfidenceCalculator()
-    decision_engine = DecisionEngine()
-    memory_manager = MemoryManager()
-    retriever = Retriever()
-
-    context = collector.collect(
-        query="Explain adaptive context compression.",
-        conversation=[
-            "What is Retrieval-Augmented Generation?",
-            "Explain vector databases."
-        ],
-        documents=[
-            "Research Paper A",
-            "Research Paper B"
-        ]
-    )
-
-    importance = scorer.calculate_score(context)
-    confidence = confidence_calculator.calculate_confidence(context)
-
-    decision = decision_engine.decide(
-        importance,
-        confidence
-    )
-
-    if decision == "STORE":
-
-        memory_id = memory_manager.store(
-            context,
-            importance,
-            confidence,
-            decision
-        )
-
-        print("\nMemory stored successfully.")
-        print("Memory ID :", memory_id)
-
-    print("\nCollected Context")
-    print(context)
-
-    print("\nImportance Score :", importance)
-    print("Confidence Score :", confidence)
-    print("Decision :", decision)
-
-    print("\nSQLite Memories")
-
-    for memory in memory_manager.get_all_memories():
-        print(memory)
-
-    print("\nSemantic Retrieval")
-
-    semantic_results = retriever.retrieve(
-        "memory optimization"
-    )
-
-    documents = semantic_results["documents"][0]
-    ids = semantic_results["ids"][0]
-    distances = semantic_results["distances"][0]
-
-    for i in range(len(ids)):
-
-        print("-" * 50)
-        print("Memory ID :", ids[i])
-        print("Query     :", documents[i])
-        print("Distance  :", distances[i])
-
-    print("\nPipeline executed successfully.")
+@app.get("/health")
+def health():
+    return {
+        "status": "Healthy",
+        "message": "ACIE API is running successfully."
+    }
 
 
 if __name__ == "__main__":
-    main()
+    import uvicorn
+
+    uvicorn.run(
+        "Backend.main:app",
+        host="127.0.0.1",
+        port=8000,
+        reload=True
+    )

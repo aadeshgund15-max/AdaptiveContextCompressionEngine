@@ -1,49 +1,42 @@
 """
 Adaptive Context Intelligence Engine (ACIE)
-Embedding Service (Singleton)
+Embedding Service
 """
 
-from sentence_transformers import SentenceTransformer
+from Backend.core.model_registry import ModelRegistry
 
 
 class EmbeddingService:
 
-    _instance = None
-    _model = None
+    def __init__(self):
 
-    def __new__(cls):
-
-        if cls._instance is None:
-
-            cls._instance = super().__new__(cls)
-
-            print("Loading embedding model...")
-
-            cls._model = SentenceTransformer(
-                "all-MiniLM-L6-v2"
-            )
-
-            print("Embedding model loaded successfully.")
-
-        return cls._instance
+        self.model = ModelRegistry.get_embedding_model()
 
     def generate_embedding(self, text):
 
-        embedding = self._model.encode(text)
+        embedding = self.model.encode(text)
 
         return embedding.tolist()
+
+    def generate_embeddings(self, texts):
+
+        embeddings = self.model.encode(texts)
+
+        return embeddings.tolist()
 
 
 if __name__ == "__main__":
 
-    service1 = EmbeddingService()
+    service = EmbeddingService()
 
-    service2 = EmbeddingService()
+    text = "Adaptive Context Compression Engine"
 
-    print(service1 is service2)
+    embedding = service.generate_embedding(text)
 
-    embedding = service1.generate_embedding(
-        "Adaptive Context Compression"
-    )
+    print("Embedding Dimension :")
 
     print(len(embedding))
+
+    print("\nFirst 10 Values :")
+
+    print(embedding[:10])
