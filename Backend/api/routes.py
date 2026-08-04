@@ -4,6 +4,7 @@ API Routes
 """
 
 from fastapi import APIRouter
+from pydantic import BaseModel
 
 from Backend.collector.context_collector import ContextCollector
 from Backend.scorer.importance_scorer import ImportanceScorer
@@ -16,6 +17,8 @@ from Backend.hybrid.hybrid_retriever import HybridRetriever
 from Backend.context_builder.context_window_builder import ContextWindowBuilder
 from Backend.pipeline.memory_pipeline import MemoryPipeline
 from Backend.reflection.reflection_engine import ReflectionEngine
+from Backend.agent.agent_runtime import AgentRuntime
+from Backend.core.pipeline_manager import PipelineManager
 
 from Backend.models.request_models import (
     StoreRequest,
@@ -23,6 +26,17 @@ from Backend.models.request_models import (
     CompressRequest,
     ContextRequest
 )
+
+
+class ChatRequest(BaseModel):
+
+    query: str
+
+
+class ChatResponse(BaseModel):
+
+    response: str
+    status: str
 
 router = APIRouter()
 
@@ -37,7 +51,9 @@ hybrid_retriever = HybridRetriever()
 context_builder = ContextWindowBuilder()
 
 pipeline = MemoryPipeline()
+manager = PipelineManager()
 reflection_engine = ReflectionEngine()
+agent_runtime = AgentRuntime()
 
 
 @router.get("/")
@@ -290,6 +306,91 @@ def execute_pipeline(request: StoreRequest):
     result = pipeline.process(
 
         query=request.query,
+
+        conversation=request.conversation,
+
+        documents=request.documents
+
+    )
+
+    return result
+
+# =====================================
+# AI CHAT ENDPOINT
+# =====================================
+
+@router.post("/chat", response_model=ChatResponse)
+def chat(request: ChatRequest):
+
+    result = agent_runtime.run(
+
+        request.query
+
+    )
+
+    return ChatResponse(
+
+        response=str(result) if isinstance(result, dict) else result,
+
+        status="SUCCESS"
+
+    )
+
+# =====================================
+# AGENT STATUS
+# =====================================
+
+@router.get("/agent-status")
+def agent_status():
+
+    return {
+
+        "agent": "ACIE",
+
+        "memory": "READY",
+
+        "retrieval": "READY",
+
+        "reasoning": "READY",
+
+        "llm": "READY",
+
+        "api": "ONLINE"
+
+    }
+
+# =====================================
+# PING
+# =====================================
+
+@router.get("/ping")
+def ping():
+
+    return {
+
+        "message": "Pong"
+
+    }
+# =====================================
+# COMPLETE ACIE ENGINE
+# =====================================
+
+@router.post("/engine")
+def execute_engine(request: StoreRequest):
+
+    request_data = {
+
+        "query": request.query,
+
+        "requires_retrieval": True,
+
+        "task_type": "general"
+
+    }
+
+    result = manager.execute(
+
+        request=request_data,
 
         conversation=request.conversation,
 

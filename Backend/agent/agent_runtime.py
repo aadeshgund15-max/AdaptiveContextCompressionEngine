@@ -24,22 +24,24 @@ class AgentRuntime:
         retrieval_pipeline=None
     ):
 
-        self.task_manager = task_manager if task_manager is not None else TaskManager()
+        self.task_manager = task_manager or TaskManager()
 
-        self.state_manager = state_manager if state_manager is not None else StateManager()
+        self.state_manager = state_manager or StateManager()
 
-        self.execution_engine = execution_engine if execution_engine is not None else ExecutionEngine(
+        self.execution_engine = execution_engine or ExecutionEngine(
             task_manager=self.task_manager,
             state_manager=self.state_manager
         )
 
-        self.tool_router = tool_router if tool_router is not None else ToolRouter()
+        self.tool_router = tool_router or ToolRouter()
 
-        self.memory_pipeline = memory_pipeline if memory_pipeline is not None else MemoryPipeline()
+        self.memory_pipeline = memory_pipeline or MemoryPipeline()
 
-        self.retrieval_pipeline = retrieval_pipeline if retrieval_pipeline is not None else RetrievalPipeline()
+        self.retrieval_pipeline = retrieval_pipeline or RetrievalPipeline()
 
-    # --------------------------------------------------
+    # -------------------------------------------------------
+    # Initialize Agent
+    # -------------------------------------------------------
 
     def initialize(self, query):
 
@@ -49,93 +51,146 @@ class AgentRuntime:
 
         self.state_manager.set_goal(query)
 
-        self.task_manager.add_task("Collect Context")
+        clear_tasks_method = getattr(self.task_manager, "clear_tasks", None)
+        if callable(clear_tasks_method):
+            clear_tasks_method()
+        else:
+            clear_method = getattr(self.task_manager, "clear", None)
+            if callable(clear_method):
+                clear_method()
+            else:
+                tasks_attr = getattr(self.task_manager, "tasks", None)
+                if isinstance(tasks_attr, list):
+                    tasks_attr.clear()
 
-        self.task_manager.add_task("Retrieve Memories")
+        self.task_manager.add_task(
+            "Collect Context"
+        )
 
-        self.task_manager.add_task("Reason")
+        self.task_manager.add_task(
+            "Retrieve Memories"
+        )
 
-        self.task_manager.add_task("Generate Response")
+        self.task_manager.add_task(
+            "Reason"
+        )
 
-    # --------------------------------------------------
+        self.task_manager.add_task(
+            "Generate Response"
+        )
+
+    # -------------------------------------------------------
+    # Main Runtime
+    # -------------------------------------------------------
 
     def run(
-
         self,
-
         query,
-
-        conversation,
-
-        documents
-
+        conversation=None,
+        documents=None
     ):
+
+        if conversation is None:
+            conversation = []
+
+        if documents is None:
+            documents = []
 
         self.initialize(query)
 
         print("\n========== AGENT RUNTIME ==========\n")
 
-        # -----------------------------
-        # Memory Pipeline
-        # -----------------------------
+        try:
 
-        memory_result = self.memory_pipeline.process(
+            # ---------------------------------------
+            # Memory Pipeline
+            # ---------------------------------------
 
-            query=query,
+            memory_result = self.memory_pipeline.process(
 
-            conversation=conversation,
+                query=query,
 
-            documents=documents
+                conversation=conversation,
 
-        )
+                documents=documents
 
-        # -----------------------------
-        # Retrieval Pipeline
-        # -----------------------------
+            )
 
-        retrieval_result = self.retrieval_pipeline.retrieve(
+            # ---------------------------------------
+            # Retrieval Pipeline
+            # ---------------------------------------
 
-            query=query,
+            retrieval_result = self.retrieval_pipeline.retrieve(
 
-            memories=memory_result["consolidated_memories"],
+                query=query,
 
-            token_budget=100
+                memories=memory_result["consolidated_memories"],
 
-        )
+                token_budget=100
 
-        # -----------------------------
-        # Execute Tasks
-        # -----------------------------
+            )
 
-        while True:
+            # ---------------------------------------
+            # Execute Tasks
+            # ---------------------------------------
 
-            task = self.task_manager.get_next_task()
+            while True:
 
-            if task is None:
+                task = self.task_manager.get_next_task()
 
-                break
+                if task is None:
+                    break
 
-            tool = self.tool_router.select_tool(task)
+                tool = self.tool_router.select_tool(task)
 
-            print(f"\nTask : {task}")
+                print(f"\nTask : {task}")
 
-            print(f"Tool : {tool}")
+                print(f"Tool : {tool}")
 
-            self.execution_engine.execute_task(task)
+                self.execution_engine.execute_task(task)
 
-        self.state_manager.stop()
+            self.state_manager.stop()
 
-        return {
+            # ---------------------------------------
+            # Placeholder Response
+            # ---------------------------------------
 
-            "memory": memory_result,
+            final_response = (
+                "ACIE successfully processed the request. "
+                "LLM integration is the next step."
+            )
 
-            "retrieval": retrieval_result,
+            return {
 
-            "agent_state": self.state_manager.get_state(),
+                "status": "SUCCESS",
 
-            "task_status": self.task_manager.status()
+                "query": query,
 
-        }
+                "response": final_response,
+
+                "memory": memory_result,
+
+                "retrieval": retrieval_result,
+
+                "agent_state": self.state_manager.get_state(),
+
+                "task_status": self.task_manager.status()
+
+            }
+
+        except Exception as e:
+
+            self.state_manager.stop()
+
+            return {
+
+                "status": "ERROR",
+
+                "query": query,
+
+                "error": str(e)
+
+            }
 
 
 if __name__ == "__main__":
@@ -144,23 +199,7 @@ if __name__ == "__main__":
 
     result = runtime.run(
 
-        query="Explain Adaptive Context Compression.",
-
-        conversation=[
-
-            "What is semantic retrieval?",
-
-            "Explain vector databases."
-
-        ],
-
-        documents=[
-
-            "Research Paper A",
-
-            "Research Paper B"
-
-        ]
+        query="Explain Adaptive Context Compression."
 
     )
 
