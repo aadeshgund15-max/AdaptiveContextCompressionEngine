@@ -7,8 +7,7 @@ from __future__ import annotations
 
 import time
 
-from Backend.logging.logger import logger
-
+from Backend.logger_system.logger import logger
 
 class PerformanceLogger:
 

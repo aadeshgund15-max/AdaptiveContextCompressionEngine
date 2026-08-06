@@ -10,6 +10,8 @@ from Backend.reasoning.reflection_reasoner import ReflectionReasoner
 from Backend.reasoning.verifier import Verifier
 from Backend.reasoning.self_critique import SelfCritique
 
+from Backend.data_structures.stack import Stack
+
 
 class ReasoningEngine:
 
@@ -27,6 +29,9 @@ class ReasoningEngine:
 
         self.self_critique = SelfCritique()
 
+        # DSA : Stack
+        self.reasoning_stack = Stack()
+
     # -------------------------------------------------
 
     def process(
@@ -43,9 +48,13 @@ class ReasoningEngine:
 
         print("\n========== REASONING ENGINE ==========\n")
 
+        self.reasoning_stack.clear()
+
         # --------------------------------
         # Decision Tree
         # --------------------------------
+
+        self.reasoning_stack.push("Decision Tree")
 
         strategy = self.decision_tree.decide(
 
@@ -57,6 +66,8 @@ class ReasoningEngine:
         # Planning
         # --------------------------------
 
+        self.reasoning_stack.push("Planner")
+
         plan = self.planner.create_plan(
 
             query
@@ -66,6 +77,8 @@ class ReasoningEngine:
         # --------------------------------
         # Chain of Thought
         # --------------------------------
+
+        self.reasoning_stack.push("Chain Of Thought")
 
         reasoning = self.chain_of_thought.reason(
 
@@ -79,6 +92,8 @@ class ReasoningEngine:
         # Reflection
         # --------------------------------
 
+        self.reasoning_stack.push("Reflection")
+
         reflection = self.reflection.reflect(
 
             reasoning
@@ -88,6 +103,8 @@ class ReasoningEngine:
         # --------------------------------
         # Verification
         # --------------------------------
+
+        self.reasoning_stack.push("Verification")
 
         verification = self.verifier.verify(
 
@@ -101,6 +118,8 @@ class ReasoningEngine:
         # Self Critique
         # --------------------------------
 
+        self.reasoning_stack.push("Self Critique")
+
         critique = self.self_critique.critique(
 
             draft_response,
@@ -111,21 +130,34 @@ class ReasoningEngine:
 
         # --------------------------------
 
+        reasoning_trace = self.reasoning_stack.to_list()
+
         return {
 
-    "strategy": strategy,
+            "strategy": strategy,
 
-    "plan": plan["plan"],
+            "plan": plan["plan"],
 
-    "reasoning": reasoning,
+            "reasoning": reasoning,
 
-    "reflection": reflection,
+            "reflection": reflection,
 
-    "verification": verification,
+            "verification": verification,
 
-    "critique": critique
+            "critique": critique,
 
-}
+            "reasoning_trace": reasoning_trace
+
+        }
+
+    # -------------------------------------------------
+    # Display Reasoning Stack
+    # -------------------------------------------------
+
+    def show_reasoning_trace(self):
+
+        self.reasoning_stack.display()
+
 
 if __name__ == "__main__":
 
@@ -174,3 +206,7 @@ if __name__ == "__main__":
     print("\n========== RESULT ==========\n")
 
     print(result)
+
+    print("\n========== REASONING STACK ==========\n")
+
+    engine.show_reasoning_trace()

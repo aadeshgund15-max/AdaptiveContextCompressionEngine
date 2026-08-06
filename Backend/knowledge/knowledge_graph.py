@@ -3,14 +3,23 @@ Adaptive Context Intelligence Engine (ACIE)
 Knowledge Graph
 """
 
+from Backend.data_structures.graph import Graph
+
 
 class KnowledgeGraph:
 
     def __init__(self):
 
+        # DSA Graph
+        self.graph = Graph(True)
+
+        # Stores memory information
         self.nodes = {}
 
-        self.edges = {}
+        # Stores relationship labels
+        self.relationships = {}
+
+    # -------------------------------------------------
 
     def add_node(self, memory_id, query):
 
@@ -24,7 +33,9 @@ class KnowledgeGraph:
 
             }
 
-            self.edges[memory_id] = []
+            self.relationships[memory_id] = []
+
+    # -------------------------------------------------
 
     def add_relationship(
 
@@ -38,11 +49,11 @@ class KnowledgeGraph:
 
     ):
 
-        if source not in self.edges:
+        # Graph edge
+        self.graph.add_edge(source, target)
 
-            self.edges[source] = []
-
-        self.edges[source].append({
+        # Relationship label
+        self.relationships[source].append({
 
             "target": target,
 
@@ -50,15 +61,19 @@ class KnowledgeGraph:
 
         })
 
+    # -------------------------------------------------
+
     def get_neighbors(self, memory_id):
 
-        return self.edges.get(
+        return self.relationships.get(
 
             memory_id,
 
             []
 
         )
+
+    # -------------------------------------------------
 
     def get_node(self, memory_id):
 
@@ -70,13 +85,51 @@ class KnowledgeGraph:
 
         )
 
+    # -------------------------------------------------
+
     def get_all_nodes(self):
 
         return self.nodes
 
+    # -------------------------------------------------
+
     def get_all_relationships(self):
 
-        return self.edges
+        return self.relationships
+
+    # -------------------------------------------------
+
+    def bfs(self, start):
+
+        return self.graph.bfs(start)
+
+    # -------------------------------------------------
+
+    def dfs(self, start):
+
+        return self.graph.dfs(start)
+
+    # -------------------------------------------------
+
+    def shortest_path(
+
+        self,
+
+        start,
+
+        end
+
+    ):
+
+        return self.graph.shortest_path(
+
+            start,
+
+            end
+
+        )
+
+    # -------------------------------------------------
 
     def node_count(self):
 
@@ -86,19 +139,23 @@ class KnowledgeGraph:
 
         )
 
+    # -------------------------------------------------
+
     def relationship_count(self):
 
         total = 0
 
-        for node in self.edges:
+        for node in self.relationships:
 
             total += len(
 
-                self.edges[node]
+                self.relationships[node]
 
             )
 
         return total
+
+    # -------------------------------------------------
 
     def print_graph(self):
 
@@ -118,7 +175,7 @@ class KnowledgeGraph:
 
             )
 
-            neighbors = self.edges[node_id]
+            neighbors = self.relationships[node_id]
 
             if len(neighbors) == 0:
 
@@ -142,11 +199,15 @@ class KnowledgeGraph:
 
             print()
 
+    # -------------------------------------------------
+
     def clear(self):
 
         self.nodes.clear()
 
-        self.edges.clear()
+        self.relationships.clear()
+
+        self.graph = Graph(True)
 
 
 if __name__ == "__main__":
@@ -212,5 +273,35 @@ if __name__ == "__main__":
         "Relationships :",
 
         graph.relationship_count()
+
+    )
+
+    print(
+
+        "\nBFS :",
+
+        graph.bfs(1)
+
+    )
+
+    print(
+
+        "DFS :",
+
+        graph.dfs(1)
+
+    )
+
+    print(
+
+        "Shortest Path :",
+
+        graph.shortest_path(
+
+            1,
+
+            2
+
+        )
 
     )

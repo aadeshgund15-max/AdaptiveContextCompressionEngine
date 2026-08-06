@@ -8,6 +8,8 @@ from datetime import datetime
 from Backend.database.database import Database
 from Backend.database.chroma_database import ChromaDatabase
 from Backend.core.service_registry import ServiceRegistry
+from Backend.data_structures.linked_list import LinkedList
+from Backend.data_structures.hash_table import HashTable
 
 
 class MemoryManager:
@@ -17,6 +19,10 @@ class MemoryManager:
         self.sqlite = Database()
 
         self.chroma = ChromaDatabase()
+
+        self.conversation_history = LinkedList()
+
+        self.memory_cache = HashTable()
 
         self.embedding_service = ServiceRegistry.get_embedding_service()
 
@@ -65,6 +71,17 @@ class MemoryManager:
 
         )
 
+        print("=" * 60)
+        print("Memory ID:", memory_id)
+        print("Current database contents:")
+        print(self.sqlite.fetch_all())
+        print("=" * 60)
+
+        self.conversation_history.append(
+            context["query"],
+            decision
+        )
+
         embedding = self.embedding_service.generate_embedding(
 
             context["query"]
@@ -81,15 +98,39 @@ class MemoryManager:
 
         )
 
+        self.memory_cache.insert(
+            memory_id,
+            {
+                "query": context["query"],
+                "importance": importance,
+                "confidence": confidence,
+                "decision": decision
+            }
+        )
+
         return memory_id
 
     def get_all_memories(self):
 
         return self.sqlite.fetch_all()
 
+    def get_conversation_history(self):
+
+        return self.conversation_history.to_list()
+
     def get_memory(self, memory_id):
 
-        return self.sqlite.fetch_by_id(memory_id)
+        cached = self.memory_cache.get(memory_id)
+
+        if cached is not None:
+            return cached
+
+        memory = self.sqlite.fetch_by_id(memory_id)
+
+        if memory:
+            self.memory_cache.insert(memory_id, memory)
+
+        return memory
 
     def update_access(self, memory_id):
 
@@ -125,11 +166,8 @@ class MemoryManager:
 
     def delete_memory(self, memory_id):
 
-        self.sqlite.delete_memory(
-
-            memory_id
-
-        )
+        self.sqlite.delete_memory(memory_id)
+        self.memory_cache.delete(memory_id)
 
 
 if __name__ == "__main__":

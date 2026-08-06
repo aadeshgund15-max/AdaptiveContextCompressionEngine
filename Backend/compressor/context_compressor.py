@@ -6,6 +6,7 @@ Context Compressor
 from Backend.compressor.token_estimator import TokenEstimator
 from Backend.compressor.redundancy_detector import RedundancyDetector
 from Backend.compressor.semantic_compressor import SemanticCompressor
+from Backend.data_structures.merge_sort import MergeSort
 
 
 class ContextCompressor:
@@ -15,6 +16,9 @@ class ContextCompressor:
         self.detector = RedundancyDetector()
         self.estimator = TokenEstimator()
         self.semantic = SemanticCompressor()
+
+        # DSA
+        self.merge_sort = MergeSort()
 
     def compress(self, memories):
 
@@ -36,6 +40,29 @@ class ContextCompressor:
         # -----------------------------
 
         unique_memories = self.detector.remove_duplicates(memories)
+
+        # -----------------------------
+        # Sort Memories using Merge Sort
+        # (Largest token count first)
+        # -----------------------------
+
+        memory_sizes = []
+
+        for memory in unique_memories:
+
+            tokens = self.estimator.estimate(memory)
+
+            memory_sizes.append((tokens, memory))
+
+        sorted_sizes = self.merge_sort.sort(memory_sizes)
+
+        sorted_sizes.reverse()
+
+        unique_memories = []
+
+        for _, memory in sorted_sizes:
+
+            unique_memories.append(memory)
 
         # -----------------------------
         # Remove Semantic Duplicates

@@ -1,63 +1,126 @@
 """
 Adaptive Context Intelligence Engine (ACIE)
+
 Agent Orchestrator
+
+Controls complete autonomous agent workflow.
 """
+
 
 from Backend.agent.task_manager import TaskManager
 from Backend.agent.state_manager import StateManager
 from Backend.agent.execution_engine import ExecutionEngine
 from Backend.agent.tool_router import ToolRouter
+from Backend.agent.response_generator import ResponseGenerator
+
 
 from Backend.pipeline.memory_pipeline import MemoryPipeline
 from Backend.pipeline.retrieval_pipeline import RetrievalPipeline
 
 
+from Backend.llm.llm_client import LLMClient
+
+
+
 class Orchestrator:
 
-    def __init__(
-        self,
-        task_manager=None,
-        state_manager=None,
-        execution_engine=None,
-        tool_router=None,
-        memory_pipeline=None,
-        retrieval_pipeline=None,
-    ):
 
-        self.task_manager = task_manager or TaskManager()
+    def __init__(self):
 
-        self.state_manager = state_manager or StateManager()
 
-        self.execution_engine = execution_engine or ExecutionEngine(
-            task_manager=self.task_manager,
-            state_manager=self.state_manager,
+        print("\n========== INITIALIZING ACIE AGENT ==========\n")
+
+
+        # Core managers
+
+        self.task_manager = TaskManager()
+
+        self.state_manager = StateManager()
+
+        self.tool_router = ToolRouter()
+
+
+
+        # Pipelines
+
+        self.memory_pipeline = MemoryPipeline()
+
+        self.retrieval_pipeline = RetrievalPipeline()
+
+
+
+        # LLM
+
+        self.llm_client = LLMClient(
+            model="gemini"
         )
 
-        self.tool_router = tool_router or ToolRouter()
 
-        self.memory_pipeline = memory_pipeline or MemoryPipeline()
 
-        self.retrieval_pipeline = retrieval_pipeline or RetrievalPipeline()
+        # Response generator
 
-    # --------------------------------------------------
+        self.response_generator = ResponseGenerator(
+            llm_client=self.llm_client
+        )
 
-    def initialize(self, query):
 
-        print("\n========== ORCHESTRATOR ==========\n")
 
-        self.state_manager.start()
+        # Execution Engine
 
-        self.state_manager.set_goal(query)
+        self.execution_engine = ExecutionEngine(
 
-        self.task_manager.add_task("Collect Context")
+            task_manager=self.task_manager,
 
-        self.task_manager.add_task("Retrieve Memories")
+            state_manager=self.state_manager,
 
-        self.task_manager.add_task("Reason")
+            tool_router=self.tool_router,
 
-        self.task_manager.add_task("Generate Response")
+            llm_client=self.llm_client,
 
-    # --------------------------------------------------
+            response_generator=self.response_generator
+
+        )
+
+
+
+    # ------------------------------------------------
+
+    # Create Agent Plan
+
+    # ------------------------------------------------
+
+
+    def create_plan(self):
+
+
+        tasks = [
+
+            "Collect Context",
+
+            "Retrieve Memories",
+
+            "Reason",
+
+            "Generate Response"
+
+        ]
+
+
+        for task in tasks:
+
+            self.task_manager.add_task(task)
+
+
+        return tasks
+
+
+
+    # ------------------------------------------------
+
+    # Execute Agent
+
+    # ------------------------------------------------
+
 
     def execute(
 
@@ -65,19 +128,69 @@ class Orchestrator:
 
         query,
 
-        conversation,
+        conversation=None,
 
-        documents
+        documents=None
 
     ):
 
-        self.initialize(query)
+
+        if conversation is None:
+
+            conversation=[]
+
+
+        if documents is None:
+
+            documents=[]
+
+
+
+        print(
+            "\n========== ACIE ORCHESTRATOR ==========\n"
+        )
+
+
+
+        # Start state
+
+
+        self.state_manager.start()
+
+        self.state_manager.set_goal(query)
+
+
+
+        # Clear previous tasks
+
+        task_clear = getattr(
+            self.task_manager,
+            "clear_tasks",
+            None
+        )
+
+        if callable(task_clear):
+            task_clear()
+
+
+
+        # Create plan
+
+        plan = self.create_plan()
+
+
+
+        print(
+            "Agent Plan:",
+            plan
+        )
+
+
 
         # ----------------------------
-        # Memory Pipeline
+        # Memory Processing
         # ----------------------------
 
-        print("\nRunning Memory Pipeline...\n")
 
         memory_result = self.memory_pipeline.process(
 
@@ -89,92 +202,163 @@ class Orchestrator:
 
         )
 
+
+
         # ----------------------------
-        # Retrieval Pipeline
+        # Retrieval
         # ----------------------------
 
-        print("\nRunning Retrieval Pipeline...\n")
 
         retrieval_result = self.retrieval_pipeline.retrieve(
 
             query=query,
 
-            memories=memory_result["consolidated_memories"],
+            memories=
+            memory_result.get(
+                "consolidated_memories",
+                []
+            ),
 
             token_budget=100
 
         )
 
+
+
         # ----------------------------
-        # Execute Tasks
+        # Task Execution
         # ----------------------------
 
-        print("\nExecuting Tasks...\n")
+
+        execution_history=[]
+
+
 
         while True:
 
+
             task = self.task_manager.get_next_task()
+
 
             if task is None:
 
                 break
 
+
+
             tool = self.tool_router.select_tool(task)
+
 
             self.state_manager.set_tool(tool)
 
-            print("------------------------------------")
 
-            print("Task :", task)
 
-            print("Tool :", tool)
+            print(
+                "\nExecuting:",
+                task
+            )
 
-            self.execution_engine.execute_task(task)
+
+            result = self.execution_engine.execute_task(
+                task
+            )
+
+
+            execution_history.append(result)
+
+
+
+
+        # ----------------------------
+        # Generate AI Answer
+        # ----------------------------
+
+
+        response_result = self.response_generator.generate(
+
+            query=query,
+
+            memory_result=memory_result,
+
+            retrieval_result=retrieval_result
+
+        )
+
+
 
         self.state_manager.stop()
 
+
+
         return {
 
-            "memory": memory_result,
 
-            "retrieval": retrieval_result,
+            "status":
 
-            "agent_state": self.state_manager.get_state(),
+            "SUCCESS",
 
-            "task_status": self.task_manager.status()
+
+
+            "query":
+
+            query,
+
+
+
+            "response":
+
+            response_result,
+
+
+
+            "memory":
+
+            memory_result,
+
+
+
+            "retrieval":
+
+            retrieval_result,
+
+
+
+            "agent_state":
+
+            self.state_manager.get_state(),
+
+
+
+            "task_status":
+
+            self.task_manager.status(),
+
+
+
+            "execution_history":
+
+            execution_history
 
         }
 
 
-if __name__ == "__main__":
 
-    orchestrator = Orchestrator(
-        task_manager=TaskManager(),
-        state_manager=StateManager()
-    )
+if __name__=="__main__":
 
-    result = orchestrator.execute(
 
-        query="Explain Adaptive Context Compression.",
 
-        conversation=[
+    agent = Orchestrator()
 
-            "What is semantic retrieval?",
 
-            "Explain vector databases."
 
-        ],
+    result = agent.execute(
 
-        documents=[
-
-            "Research Paper A",
-
-            "Research Paper B"
-
-        ]
+        query="Explain quantum computing"
 
     )
 
-    print("\n========== FINAL RESULT ==========\n")
 
-    print(result)
+    print("\n========== FINAL OUTPUT ==========\n")
+
+
+    print(result["response"])

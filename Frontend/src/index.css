@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/* =====================================================
+   ACIE DESIGN SYSTEM & BASE UTILITIES
+   Adaptive Context Intelligence Engine
+   Premium Glassmorphism Infrastructure Theme
+===================================================== */
+
+/* =====================================================
+   1. GLOBAL SYSTEM VARIABLES
+===================================================== */
+:root {
+  /* Brand Tokens */
+  --primary: #38bdf8;
+  --primary-dark: #0284c7;
+  --secondary: #8b5cf6;
+  --secondary-dark: #6d28d9;
+  --accent: #ec4899;
+
+  /* Status Colors */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Surfaces & Borders */
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-light: rgba(255, 255, 255, 0.08);
+  --surface-hover: rgba(255, 255, 255, 0.11);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(56, 189, 248, 0.25);
+
+  /* Typography */
+  --text: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  /* Geometry & Shadows */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.28);
+  --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.42);
+  --shadow-glow: 0 0 35px rgba(56, 189, 248, 0.22);
+}
+
+/* =====================================================
+   2. CORE RESET & ISOLATION
+===================================================== */
+#root {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+}
+
+/* Smooth Scrolling & Typography Enhancements */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  -webkit-user-select: none; /* Safari 3+, iOS 3+ */
+  user-select: none;
+}
+
+svg {
+  flex-shrink: 0;
+}
+
+/* Text Selection Style */
+::selection {
+  color: #ffffff;
+  background: rgba(56, 189, 248, 0.32);
+}
+
+/* Horizontal Rule Styling */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+  margin: 24px 0;
+}
+
+/* =====================================================
+   3. BACKGROUND & AMBIENT EFFECTS
+===================================================== */
+
+/* Floating Ambient Orbs */
+body::before {
+  content: "";
+  position: fixed;
+  top: -220px;
+  left: -220px;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 70%);
+  filter: blur(80px);
+  animation: floatOrbOne 16s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  right: -180px;
+  bottom: -180px;
+  width: 620px;
+  height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.22), transparent 70%);
+  filter: blur(80px);
+  animation: floatOrbTwo 18s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* Tech Grid Overlay */
+.ai-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -3;
+  opacity: 0.08;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+/* Ambient Animation Keyframes */
+@keyframes floatOrbOne {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(140px, 100px) scale(1.25); }
+}
+
+@keyframes floatOrbTwo {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-120px, -100px) scale(1.2); }
+}
+
+/* =====================================================
+   4. GLASS & UI UTILITIES
+===================================================== */
+
+/* Glass Cards & Containers */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+}
+
+.glass-outline {
+  position: relative;
+}
+
+.glass-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(56, 189, 248, 0.45),
+    rgba(139, 92, 246, 0.35),
+    transparent
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Gradient Text Utilities */
+.gradient-text,
+.text-gradient {
+  background: linear-gradient(90deg, #38bdf8, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Focus Ring */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+}
+
+/* Skeleton Loading State */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* AI Thinking Indicator */
+.thinking-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--primary);
+  animation: pulseAI 1.2s infinite ease-in-out;
+}
+
+@keyframes pulseAI {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+/* Glow Shadows */
+.glow-blue, .shadow-blue {
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.28);
+}
+
+.glow-purple, .shadow-purple {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.28);
+}
+
+.glow-success {
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.28);
+}
+
+/* =====================================================
+   5. ACCESSIBILITY & MEDIA CONTROLS
+===================================================== */
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+  body::before,
+  body::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

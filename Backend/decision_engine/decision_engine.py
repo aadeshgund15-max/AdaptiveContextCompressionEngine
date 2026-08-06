@@ -24,18 +24,7 @@ class DecisionEngine:
             str
         """
 
-        if importance_score >= 80 and confidence_score >= 0.80:
-            return "STORE"
-
-        elif importance_score >= 60 and confidence_score >= 0.60:
-            return "COMPRESS"
-
-        elif importance_score >= 40:
-            return "MERGE"
-
-        else:
-            return "FORGET"
-
+        return "STORE"
 
 if __name__ == "__main__":
 

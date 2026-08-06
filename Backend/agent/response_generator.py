@@ -1,18 +1,196 @@
 """
 Adaptive Context Intelligence Engine (ACIE)
+
 Response Generator
+
+Responsible for:
+- Creating final user response
+- Building LLM prompt
+- Connecting AI providers
+- Returning agent output
 """
+
+
+from typing import Any
+
 
 
 class ResponseGenerator:
 
-    def __init__(self):
 
-        pass
+    def __init__(
+
+        self,
+
+        llm_client=None
+
+    ):
+
+
+        self.llm_client = llm_client
+
+
 
     # --------------------------------------------------
+    # Generate Final Response
+    # --------------------------------------------------
+
 
     def generate(
+
+        self,
+
+        query: str,
+
+        memory_result: dict,
+
+        retrieval_result: dict,
+
+        reasoning_result: dict = None # type: ignore
+
+    ) -> dict[str,Any]:
+
+
+        print(
+
+            "\n========== RESPONSE GENERATOR ==========\n"
+
+        )
+
+
+
+        prompt = self.build_prompt(
+
+            query,
+
+            memory_result,
+
+            retrieval_result,
+
+            reasoning_result
+
+        )
+
+
+
+        # ----------------------------------
+        # LLM Generation
+        # ----------------------------------
+
+
+        if self.llm_client:
+
+
+            llm_response = (
+
+                self.llm_client.generate(
+
+                    prompt
+
+                )
+
+            )
+
+
+            answer = (
+
+                llm_response.get(
+
+                    "response",
+
+                    ""
+
+                )
+
+            )
+
+
+        else:
+
+
+            answer = (
+
+                "ACIE processed your query using "
+
+                "memory and retrieval pipelines."
+
+            )
+
+
+
+
+        return {
+
+
+            "query":
+
+            query,
+
+
+            "answer":
+
+            answer,
+
+
+            "metadata":{
+
+
+                "memory_decision":
+
+                memory_result.get(
+                    "decision"
+                ),
+
+
+                "importance":
+
+                memory_result.get(
+                    "importance"
+                ),
+
+
+                "confidence":
+
+                memory_result.get(
+                    "confidence"
+                ),
+
+
+                "memory_id":
+
+                memory_result.get(
+                    "memory_id"
+                ),
+
+
+
+                "retrieved_memories":
+
+                retrieval_result.get(
+                    "ranked_memories",
+                    []
+                ),
+
+
+                "context_window":
+
+                retrieval_result.get(
+                    "context_window",
+                    {}
+                )
+
+            }
+
+        }
+
+
+
+    # --------------------------------------------------
+    # Prompt Builder
+    # --------------------------------------------------
+
+
+    def build_prompt(
 
         self,
 
@@ -20,141 +198,167 @@ class ResponseGenerator:
 
         memory_result,
 
-        retrieval_result
+        retrieval_result,
+
+        reasoning_result=None
 
     ):
 
-        print("\n========== RESPONSE GENERATOR ==========\n")
 
-        response = {
+        context = retrieval_result.get(
 
-            "query": query,
+            "context_window",
 
-            "decision": memory_result["decision"],
+            {}
 
-            "importance": memory_result["importance"],
+        )
 
-            "confidence": memory_result["confidence"],
 
-            "memory_id": memory_result["memory_id"],
+        memories = retrieval_result.get(
 
-            "summary": memory_result["summary"],
+            "ranked_memories",
 
-            "context_window": retrieval_result["context_window"],
+            []
 
-            "knowledge_graph": memory_result["knowledge_graph"],
+        )
 
-            "retrieved_memories": retrieval_result["ranked_memories"]
 
-        }
+        reasoning = reasoning_result or {}
 
-        return response
+
+
+        prompt = f"""
+
+You are ACIE
+(Adaptive Context Intelligence Engine).
+
+Answer the user query using the provided context.
+
+USER QUERY:
+
+{query}
+
+
+RETRIEVED MEMORY:
+
+{memories}
+
+
+CONTEXT WINDOW:
+
+{context}
+
+
+REASONING:
+
+{reasoning}
+
+
+Provide a clear, accurate and helpful answer.
+
+"""
+
+
+        return prompt
+
+
 
     # --------------------------------------------------
-
-    def pretty_print(self, response):
-
-        print("\n========== FINAL RESPONSE ==========\n")
-
-        print(f"Query : {response['query']}")
-
-        print(f"\nDecision : {response['decision']}")
-
-        print(f"Importance : {response['importance']}")
-
-        print(f"Confidence : {response['confidence']}")
-
-        print(f"Memory ID : {response['memory_id']}")
-
-        print("\nSummary")
-
-        print(response["summary"])
-
-        print("\nKnowledge Graph")
-
-        print(response["knowledge_graph"])
-
-        print("\nContext Window")
-
-        print(response["context_window"])
-
-        print("\nRetrieved Memories")
-
-        for memory in response["retrieved_memories"]:
-
-            print(memory)
+    # Pretty Print
+    # --------------------------------------------------
 
 
-if __name__ == "__main__":
+    def pretty_print(
 
-    generator = ResponseGenerator()
-
-    memory_result = {
-
-        "memory_id": 1,
-
-        "importance": 95,
-
-        "confidence": 0.94,
-
-        "decision": "STORE",
-
-        "summary": "Adaptive Context Compression stores important memories.",
-
-        "knowledge_graph": {
-
-            "nodes": 8,
-
-            "relationships": 5
-
-        }
-
-    }
-
-    retrieval_result = {
-
-        "context_window": {
-
-            "selected_count": 2,
-
-            "used_tokens": 18
-
-        },
-
-        "ranked_memories": [
-
-            {
-
-                "query": "Adaptive Context Compression",
-
-                "ranking_score": 92
-
-            },
-
-            {
-
-                "query": "Semantic Retrieval",
-
-                "ranking_score": 88
-
-            }
-
-        ]
-
-    }
-
-    response = generator.generate(
-
-        query="Explain Adaptive Context Compression",
-
-        memory_result=memory_result,
-
-        retrieval_result=retrieval_result
-
-    )
-
-    generator.pretty_print(
+        self,
 
         response
 
+    ):
+
+
+        print(
+
+            "\n========== FINAL RESPONSE ==========\n"
+
+        )
+
+
+        print(
+
+            response["answer"]
+
+        )
+
+
+        print(
+
+            "\n========== ACIE METADATA ==========\n"
+
+        )
+
+
+        for key,value in response["metadata"].items():
+
+            print(
+
+                key,
+
+                ":",
+
+                value
+
+            )
+
+
+
+
+if __name__=="__main__":
+
+
+
+    generator = ResponseGenerator()
+
+
+
+    result = generator.generate(
+
+        query=
+
+        "Explain Adaptive Context Compression.",
+
+
+        memory_result={
+
+            "decision":"STORE",
+
+            "importance":90,
+
+            "confidence":0.95,
+
+            "memory_id":1
+
+        },
+
+
+        retrieval_result={
+
+            "context_window":{
+
+                "tokens":100
+
+            },
+
+
+            "ranked_memories":[
+
+                "Semantic compression memory"
+
+            ]
+
+        }
+
     )
+
+
+    generator.pretty_print(result)

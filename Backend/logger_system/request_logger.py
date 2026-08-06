@@ -7,8 +7,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from Backend.logging.logger import logger
-
+from Backend.logger_system.logger import logger
 
 class RequestLogger:
 

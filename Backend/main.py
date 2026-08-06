@@ -200,7 +200,14 @@ async def generic_exception_handler(request, exc):
 
 if __name__ == "__main__":
 
-    import uvicorn
+    import importlib
+
+    try:
+        uvicorn = importlib.import_module("uvicorn")
+    except ModuleNotFoundError as exc:
+        raise ImportError(
+            "uvicorn is required to run the server. Install it with `pip install uvicorn`."
+        ) from exc
 
     uvicorn.run(
 

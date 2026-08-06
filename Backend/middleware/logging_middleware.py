@@ -9,8 +9,7 @@ import time
 
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from Backend.logging.logger import logger
-
+from Backend.logger_system.logger import logger
 
 class LoggingMiddleware(
 

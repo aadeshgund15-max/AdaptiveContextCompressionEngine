@@ -8,8 +8,7 @@ from __future__ import annotations
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.responses import JSONResponse
 
-from Backend.logging.logger import logger
-
+from Backend.logger_system.logger import logger
 
 class ExceptionMiddleware(
 
